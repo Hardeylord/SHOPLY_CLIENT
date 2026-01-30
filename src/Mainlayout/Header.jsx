@@ -3,12 +3,9 @@ import {
   Menu,
   Moon,
   MoveRight,
-  Search,
-  ShoppingBasket,
   ShoppingCart,
   Sun,
   SunMoon,
-  User,
   UserRound,
   X,
 } from "lucide-react";
@@ -20,13 +17,11 @@ import {
 import {
   Menubar,
   MenubarContent,
-  MenubarItem,
   MenubarMenu,
   MenubarRadioGroup,
   MenubarRadioItem,
-  MenubarSeparator,
   MenubarTrigger,
-} from "@/components/ui/menubar";
+} from "@/Components/ui/menubar";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { userContext } from "../Authentication/AuthContext";
