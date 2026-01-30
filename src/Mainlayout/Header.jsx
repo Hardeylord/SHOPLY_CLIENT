@@ -7,6 +7,7 @@ import {
   ShoppingBasket,
   ShoppingCart,
   Sun,
+  SunMoon,
   User,
   UserRound,
   X,
@@ -16,6 +17,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/Components/ui/popover";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { userContext } from "../Authentication/AuthContext";
@@ -76,6 +87,8 @@ function Header() {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  const [theme1, setTheme1] = React.useState("system");
 
   const category = [
     {
@@ -257,7 +270,7 @@ function Header() {
                   )}
                 </div>
               </div>
-              <div className="flex">
+              <div className=" hidden md:flex">
                 <button
                   onClick={() => setTheme("light")}
                   className="bg-green-400 rounded-full p-2"
@@ -297,13 +310,45 @@ function Header() {
               {user ? null : (
                 <div className="text-muted-foreground flex gap-2 text-xs">
                   <Link to="/signin">
-                  <section className="font-oswald dark2 py-1.5 px-5 text-center bg-[rgb(29,76,69)] text-white flex justify-center items-center border rounded-full">Log in</section>
+                    <section className="font-oswald dark2 py-1.5 px-5 text-center bg-[rgb(29,76,69)] text-white flex justify-center items-center border rounded-full">
+                      Log in
+                    </section>
                   </Link>
                   <Link to="/signup">
-                  <section className="font-oswald py-1.5 px-5 text-center border-[rgb(29,76,69)] flex justify-center items-center border rounded-full">Register</section>
+                    <section className="font-oswald py-1.5 px-5 text-center border-[rgb(29,76,69)] flex justify-center items-center border rounded-full">
+                      Register
+                    </section>
                   </Link>
                 </div>
               )}
+
+              {/* themeing */}
+
+              <Menubar className="w-72 border-none shadow-none ">
+                <MenubarMenu>
+                  <MenubarTrigger className="space-x-3">
+                    <SunMoon strokeWidth={1.5} />
+                    <p>Theme</p>
+                  </MenubarTrigger>
+                  <MenubarContent>
+                    <MenubarRadioGroup value={theme1} onValueChange={setTheme1}>
+                      <MenubarRadioItem
+                        onClick={() => setTheme("light")}
+                        value="light"
+                      >
+                        Light
+                      </MenubarRadioItem>
+                      <MenubarRadioItem
+                        onClick={() => setTheme("dark2")}
+                        value="dark"
+                      >
+                        Dark
+                      </MenubarRadioItem>
+                      {/* <MenubarRadioItem value="system">System</MenubarRadioItem> */}
+                    </MenubarRadioGroup>
+                  </MenubarContent>
+                </MenubarMenu>
+              </Menubar>
             </PopoverContent>
           </Popover>
         </div>
