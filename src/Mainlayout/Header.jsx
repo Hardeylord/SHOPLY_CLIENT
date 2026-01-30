@@ -14,23 +14,12 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/Components/ui/popover";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/Components/ui/button";
 import { userContext } from "../Authentication/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import { ShopSearch } from "../Components/ShopSearch";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/Components/ui/sheet";
 function Header() {
   const {
     user,
@@ -253,8 +242,6 @@ function Header() {
           <div className="">
             <Menu className="size-5 md:hidden" />
           </div>
-
-         
         </div>
       </div>
     </>
