@@ -10,12 +10,12 @@ import {
 } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card";
+} from "@/Components/ui/hover-card";
 import { userContext } from "../Authentication/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import { ShopSearch } from "../Components/ShopSearch";

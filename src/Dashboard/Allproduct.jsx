@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import ProductRow from "./ProductRow";
 import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { Spinner } from "@/components/ui/spinner";
+import { Spinner } from "@/Components/ui/spinner";
 import {
   Empty,
   EmptyContent,
@@ -10,7 +10,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
+} from "@/Components/ui/empty";
 import { MoveLeft, MoveRight, Plus, RotateCcw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../Authentication/AuthContext";

@@ -16,8 +16,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Checkbox } from "@/components/ui/checkbox";
+} from "@/Components/ui/dialog";
+import { Checkbox } from "@/Components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -26,7 +26,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/Components/ui/select";
 import "../Components/rating.css";
 import Allproduct from "./Allproduct";
 import toast, { Toaster } from "react-hot-toast";
