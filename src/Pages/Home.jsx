@@ -1,20 +1,17 @@
-import { CircleX, LoaderCircle } from "lucide-react";
+import { CircleX } from "lucide-react";
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { ProgressBar } from "./ProgressBar";
-import { data } from "react-router-dom";
 import { Home2 } from "./homepage/Home2";
 import { Airpodmax } from "./homepage/Airpodmax";
 import { HomeSlide } from "./homepage/HomeSlide";
 import Bento from "./homepage/Bento";
 import Newsletter from "./homepage/Newsletter";
-import Chat_Io from "../messaging/Chat_Io";
 import { userContext } from "../Authentication/AuthContext";
 
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/components/ui/Checkbox";
 export const Home = () => {
-
-  const{theme} = useContext(userContext)
+  const { theme } = useContext(userContext);
   const [prv, setPrv] = useState(null);
   const [imgs, setImgs] = useState([]);
 
@@ -82,10 +79,10 @@ export const Home = () => {
   const [products, setProducts] = useState([]);
   const [searchInputs, setSearchInputs] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const[searching, setSarching]=useState(false);
+  const [searching, setSarching] = useState(false);
   const [price, setPrices] = useState([]);
 
-  const[isNegotiatable, setIsNego]=useState(false)
+  const [isNegotiatable, setIsNego] = useState(false);
 
   const handleCheckChange = (checked) => {
     // UI libraries usually return the boolean directly in the argument
@@ -94,7 +91,7 @@ export const Home = () => {
   };
 
   function check(e) {
-    setIsNego(e.target.checked)
+    setIsNego(e.target.checked);
   }
   // useEffect(() => {
   //   setInterval(() => {
@@ -120,14 +117,14 @@ export const Home = () => {
   // }, []);
 
   useEffect(() => {
-
     if (searchInputs.trim() === "") {
       return;
     }
 
     const search = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/search/${searchInputs}`,
+        const response = await fetch(
+          `http://localhost:8080/search/${searchInputs}`,
           {
             method: "GET",
           }
@@ -135,13 +132,12 @@ export const Home = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data)
+          console.log(data);
           setSearchResults(data);
         }
       } catch (error) {
         console.log(error);
       } finally {
-
       }
     };
 
@@ -151,13 +147,17 @@ export const Home = () => {
   const priceTotal = 0;
 
   return (
-    <div className={`${theme === "light" ? "light" : "dark2"} bg-[rgb(var(--BgColor))] w-full overflow-hidden`}>
-    {/* <Chat_Io/> */}
-    <Home2 themes={theme}/>
-    <Airpodmax themes={theme}/>
-    <HomeSlide themes={theme}/>
-    <Bento themes={theme}/>
-    <Newsletter/>
+    <div
+      className={`${
+        theme === "light" ? "light" : "dark2"
+      } bg-[rgb(var(--BgColor))] w-full overflow-hidden`}
+    >
+      {/* <Chat_Io/> */}
+      <Home2 themes={theme} />
+      <Airpodmax themes={theme} />
+      <HomeSlide themes={theme} />
+      <Bento themes={theme} />
+      <Newsletter />
       {array.map((url, index) => (
         <div key={index}>
           <p>{url.secure_url}</p>
@@ -208,13 +208,13 @@ export const Home = () => {
           className="border-2 w-96 rounded-full p-2 border-black"
         />
         <div className="w-96 bg-amber-100 h-fit p-2">
-          {searchResults.length > 0 ? (
-            searchResults.map((results, index)=>(
-              <section key={index}>
-              <p>{results.name}</p>
-            </section>
-            ))
-          ) : null}
+          {searchResults.length > 0
+            ? searchResults.map((results, index) => (
+                <section key={index}>
+                  <p>{results.name}</p>
+                </section>
+              ))
+            : null}
         </div>
       </div>
 
@@ -246,15 +246,23 @@ export const Home = () => {
 
       <div>
         <label htmlFor="isNegotiatable">Negotiable:</label>
-        <input onChange={check} type="checkbox" name="negotiable" id="isNegotiatable" />
+        <input
+          onChange={check}
+          type="checkbox"
+          name="negotiable"
+          id="isNegotiatable"
+        />
       </div>
 
       <div className="flex items-center gap-3">
-                          <label htmlFor="rating">Allow for negotiation ?</label>
-                            <Checkbox checked={isNegotiatable} onCheckedChange={handleCheckChange} className="border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600" id="terms" />
-                          </div>
+        <label htmlFor="rating">Allow for negotiation ?</label>
+        <Checkbox
+          checked={isNegotiatable}
+          onCheckedChange={handleCheckChange}
+          className="border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+          id="terms"
+        />
+      </div>
     </div>
-
-
   );
 };
