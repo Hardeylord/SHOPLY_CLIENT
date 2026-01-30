@@ -9,7 +9,7 @@ import Bento from "./homepage/Bento";
 import Newsletter from "./homepage/Newsletter";
 import { userContext } from "../Authentication/AuthContext";
 
-import { Checkbox } from "@/components/ui/Checkbox";
+// import { Checkbox } from "@/components/ui/checkbox";
 export const Home = () => {
   const { theme } = useContext(userContext);
   const [prv, setPrv] = useState(null);
@@ -82,13 +82,13 @@ export const Home = () => {
   const [searching, setSarching] = useState(false);
   const [price, setPrices] = useState([]);
 
-  const [isNegotiatable, setIsNego] = useState(false);
+  // const [isNegotiatable, setIsNego] = useState(false);
 
-  const handleCheckChange = (checked) => {
-    // UI libraries usually return the boolean directly in the argument
-    setIsNego(checked);
-    console.log("Negotiation allowed:", checked);
-  };
+  // const handleCheckChange = (checked) => {
+  //   // UI libraries usually return the boolean directly in the argument
+  //   setIsNego(checked);
+  //   console.log("Negotiation allowed:", checked);
+  // };
 
   function check(e) {
     setIsNego(e.target.checked);
@@ -244,7 +244,7 @@ export const Home = () => {
         </tbody>
       </table> */}
 
-      <div>
+      {/* <div>
         <label htmlFor="isNegotiatable">Negotiable:</label>
         <input
           onChange={check}
@@ -252,9 +252,9 @@ export const Home = () => {
           name="negotiable"
           id="isNegotiatable"
         />
-      </div>
+      </div> */}
 
-      <div className="flex items-center gap-3">
+      {/* <div className="flex items-center gap-3">
         <label htmlFor="rating">Allow for negotiation ?</label>
         <Checkbox
           checked={isNegotiatable}
@@ -262,7 +262,7 @@ export const Home = () => {
           className="border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
           id="terms"
         />
-      </div>
+      </div> */}
     </div>
   );
 };
