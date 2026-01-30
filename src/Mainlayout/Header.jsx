@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { userContext } from "../Authentication/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import { ShopSearch } from "../Components/ShopSearch";
+import { PopoverClose } from "@radix-ui/react-popover";
 function Header() {
   const {
     user,
@@ -59,6 +60,22 @@ function Header() {
     } catch (error) {}
   }
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      // stop scrolling
+      document.body.style.overflow = "hidden";
+    } else {
+      // allow scrolling
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   return (
     <>
       <Toaster />
@@ -82,7 +99,7 @@ function Header() {
           {/* ShopSearch */}
           <ShopSearch />
           {/* cart */}
-          <Popover>
+          <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
               <button
                 type="button"
@@ -91,14 +108,24 @@ function Header() {
                 <ShoppingCart className="size-4 md:size-5" />
 
                 {cartItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full light bg-[rgb(var(--btnColor))] text-[11px] font-semibold text-white flex items-center justify-center ring-2 ring-background">
+                  <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 px-1 rounded-full light bg-[rgb(var(--btnColor))] text-[11px] font-semibold text-white flex items-center justify-center ring-2 ring-background">
                     {cartItems.length}
                   </span>
                 )}
               </button>
             </PopoverTrigger>
             <PopoverContent className="w-72 md:w-96 font-oswald items-center flex flex-col justify-between h-[80vh] md:h-[95vh]">
-              <h1 className="text-xl text-center">My Cart</h1>
+
+
+              <div className="flex justify-between w-full">
+                <h1 className="text-xl text-center">My Cart</h1>
+                <PopoverClose className="rounded-full p-1 hover:bg-muted transition-colors outline-none">
+                  <X className="size-5" />
+                  <span className="sr-only">Close cart</span>
+                </PopoverClose>
+              </div>
+
+
               <div className="w-full min-h-[40vh] overflow-y-scroll touch-action-none">
                 {cartItems.length > 0 ? (
                   cartItems.map((product, index) => (
