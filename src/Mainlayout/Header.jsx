@@ -97,7 +97,7 @@ function Header() {
                 )}
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-96 font-oswald items-center flex flex-col justify-between h-[95vh]">
+            <PopoverContent className="w-72 md:w-96 font-oswald items-center flex flex-col justify-between h-[60vh] md:h-[95vh]">
               <h1 className="text-xl text-center">My Cart</h1>
               <div className="w-full min-h-[40vh] overflow-y-scroll touch-action-none">
                 {cartItems.length > 0 ? (
@@ -106,20 +106,12 @@ function Header() {
                       key={index}
                       className="flex w-full p-2 mb-2 gap-2 border-[#dcdcdc] border-[1px] rounded-[18px]"
                     >
-                      {/* <div
+                      <div
                         style={{
                           backgroundImage: `url(${product.imageUrl[0].secure_url})`,
                         }}
                         className="w-1/3 h-24 bg-cover bg-center rounded-[10px]"
-                      ></div> */}
-                      <div className="w-1/3 h-24 relative overflow-hidden rounded-[10px]">
-                        <img
-                          src={product.imageUrl[0].secure_url}
-                          alt={product.productName}
-                          className="object-cover w-full h-full"
-                          loading="lazy"
-                        />
-                      </div>
+                      ></div>
                       {/* </div> */}
                       <div className="flex w-2/3 flex-col justify-between">
                         <div className="flex justify-between">
@@ -139,7 +131,7 @@ function Header() {
                     <p className="">Your cart is empty</p>
                     <img
                       src="/crt.png"
-                      className="w-fit h-48 md:h-28"
+                      className="w-32 h-48 md:h-28"
                       alt=""
                       // srcset=""
                     />
