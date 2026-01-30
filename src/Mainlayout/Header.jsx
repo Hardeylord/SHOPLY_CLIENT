@@ -102,7 +102,7 @@ function Header() {
                 )}
               </button>
             </SheetTrigger>
-            <SheetContent className="font-oswald">
+            <SheetContent className="font-oswald transform-gpu">
               <SheetHeader>
                 <SheetTitle className="text-xl text-center font-light">
                   My Cart
@@ -119,12 +119,20 @@ function Header() {
                       key={index}
                       className="flex w-full p-2 mb-2 gap-2 border-[#dcdcdc] border-[1px] rounded-[18px]"
                     >
-                      <div
+                      {/* <div
                         style={{
                           backgroundImage: `url(${product.imageUrl[0].secure_url})`,
                         }}
                         className="w-1/3 h-24 bg-cover bg-center rounded-[10px]"
-                      ></div>
+                      ></div> */}
+                      <div className="w-1/3 h-24 relative overflow-hidden rounded-[10px]">
+                        <img
+                          src={product.imageUrl[0].secure_url}
+                          alt={product.productName}
+                          className="object-cover w-full h-full"
+                          loading="lazy"
+                        />
+                      </div>
                       {/* </div> */}
                       <div className="flex w-2/3 flex-col justify-between">
                         <div className="flex justify-between">
@@ -144,7 +152,7 @@ function Header() {
                     <p className="">Your cart is empty</p>
                     <img
                       src="/crt.png"
-                      className="w-fit h-28"
+                      className="w-fit h-48 md:h-28"
                       alt=""
                       // srcset=""
                     />
@@ -200,7 +208,7 @@ function Header() {
             <SheetTrigger asChild>
               <UserRound className="cursor-pointer size-5" />
             </SheetTrigger>
-            <SheetContent className="font-oswald h-fit rounded-2xl top-[9vh] right-1 bottom-[5vh]">
+            <SheetContent className="font-oswald transform-gpu h-fit rounded-2xl top-[9vh] right-1 bottom-[5vh]">
               <SheetHeader>
                 <SheetTitle></SheetTitle>
                 <SheetDescription className="text-center">
