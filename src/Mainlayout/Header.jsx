@@ -97,7 +97,7 @@ function Header() {
                 )}
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-72 md:w-96 font-oswald items-center flex flex-col justify-between h-[60vh] md:h-[95vh]">
+            <PopoverContent className="w-72 md:w-96 font-oswald items-center flex flex-col justify-between h-[80vh] md:h-[95vh]">
               <h1 className="text-xl text-center">My Cart</h1>
               <div className="w-full min-h-[40vh] overflow-y-scroll touch-action-none">
                 {cartItems.length > 0 ? (
@@ -170,7 +170,7 @@ function Header() {
                   opacity: cartItems.length === 0 ? 0.6 : 1,
                 }}
                 disabled={cartItems.length === 0}
-                className="flex items-center justify-center w-[70%] gap-2 light bg-[rgb(var(--btnColor))] rounded-[5px] p-1.5 px-4 cursor-pointer"
+                className="flex items-center justify-center md:w-[70%] gap-2 text-[rgb(174,157,108)] light bg-[rgb(var(--btnColor))] rounded-[5px] p-1.5 px-4 cursor-pointer"
                 type="submit"
               >
                 Proceed To Checkout <MoveRight />
