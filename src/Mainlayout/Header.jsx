@@ -3,12 +3,18 @@ import {
   Moon,
   MoveRight,
   Search,
+  ShoppingBasket,
   ShoppingCart,
   Sun,
   User,
   UserRound,
   X,
 } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/Components/ui/button";
@@ -87,8 +93,8 @@ function Header() {
           {/* ShopSearch */}
           <ShopSearch />
           {/* cart */}
-          <Sheet>
-            <SheetTrigger asChild>
+          <Popover>
+            <PopoverTrigger asChild>
               <button
                 type="button"
                 className="relative inline-flex items-center justify-center h-10 w-10 rounded-full md:bg-muted cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -101,17 +107,9 @@ function Header() {
                   </span>
                 )}
               </button>
-            </SheetTrigger>
-            <SheetContent className="font-oswald transform-gpu">
-              <SheetHeader>
-                <SheetTitle className="text-xl text-center font-light">
-                  My Cart
-                </SheetTitle>
-                <SheetDescription className="text-center">
-                  Review cart here. Click Checkout to proceed to payment.
-                </SheetDescription>
-              </SheetHeader>
-              {/* overflow cart */}
+            </PopoverTrigger>
+            <PopoverContent className="w-96 font-oswald items-center flex flex-col justify-between h-[95vh]">
+              <h1 className="text-xl text-center">My Cart</h1>
               <div className="w-full min-h-[40vh] overflow-y-scroll touch-action-none">
                 {cartItems.length > 0 ? (
                   cartItems.map((product, index) => (
@@ -184,93 +182,79 @@ function Header() {
                   </div>
                 </div>
               ) : null}
-              <SheetFooter>
-                <Button
-                  style={{
-                    cursor: cartItems.length === 0 ? "not-allowed" : "pointer",
-                    opacity: cartItems.length === 0 ? 0.6 : 1,
-                  }}
-                  disabled={cartItems.length === 0}
-                  className="flex items-center gap-2 light bg-[rgb(var(--btnColor))] rounded-[5px] p-1.5 px-4 cursor-pointer"
-                  type="submit"
-                >
-                  Proceed To Checkout <MoveRight />
-                </Button>
-                <SheetClose asChild>
-                  <Button variant="outline">Close</Button>
-                </SheetClose>
-              </SheetFooter>
-            </SheetContent>
-          </Sheet>
+
+              <button
+                style={{
+                  cursor: cartItems.length === 0 ? "not-allowed" : "pointer",
+                  opacity: cartItems.length === 0 ? 0.6 : 1,
+                }}
+                disabled={cartItems.length === 0}
+                className="flex items-center justify-center w-[70%] gap-2 light bg-[rgb(var(--btnColor))] rounded-[5px] p-1.5 px-4 cursor-pointer"
+                type="submit"
+              >
+                Proceed To Checkout <MoveRight />
+              </button>
+            </PopoverContent>
+          </Popover>
           {/* User Account */}
 
-          <Sheet className="h-[70vh]">
-            <SheetTrigger asChild>
+          <Popover>
+            <PopoverTrigger asChild>
               <UserRound className="cursor-pointer size-5" />
-            </SheetTrigger>
-            <SheetContent className="font-oswald transform-gpu h-fit rounded-2xl top-[9vh] right-1 bottom-[5vh]">
-              <SheetHeader>
-                <SheetTitle></SheetTitle>
-                <SheetDescription className="text-center">
-                  {/* Review cart here. Click Checkout to proceed to payment. */}
-                </SheetDescription>
-              </SheetHeader>
-
-              <div className="px-4">
-                <div className="flex  gap-4">
-                  <Link to="/user/account">
-                    <section className="bg-[#bdbdbd] rounded-full h-fit p-2">
-                      <UserRound className="cursor-pointer" />
-                    </section>
-                  </Link>
-                  <div className="space-y-1 flex flex-col">
-                    <h4 className="text-sm font-oswald">
-                      {user ? <span>{userName}</span> : <span>Shoply</span>}
-                    </h4>
-                    <p className="text-sm">
-                      Sign in and subscribe to our newsletter to get new product
-                      updates.
-                    </p>
-                    {user ? null : (
-                      <div className="text-muted-foreground text-xs">
-                        <Link to="/signin">
-                          <section className="cursor-pointer font-oswald flex light bg-[rgb(var(--btnColor))] transition-all duration-300 p-1.5 rounded-[7px] space-x-2 justify-center">
-                            <p className="text-black">Sign in </p>
-                          </section>
-                        </Link>
-                        <Link to="/signup">
-                          <section className="p-1.5 text-green-900">
-                            Register
-                          </section>
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="flex">
-                  <button
-                    onClick={() => setTheme("light")}
-                    className="bg-green-400 rounded-full p-2"
-                  >
-                    <Sun strokeWidth={1.5} />
-                  </button>
-                  <button
-                    onClick={() => setTheme("dark2")}
-                    className="bg-black rounded-full p-2"
-                  >
-                    <Moon color="green" strokeWidth={1.5} />
-                  </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
+              <div className="flex  gap-4">
+                <Link to="/user/account">
+                  <section className="bg-[#bdbdbd] rounded-full h-fit p-2">
+                    <UserRound className="cursor-pointer" />
+                  </section>
+                </Link>
+                <div className="space-y-1 flex flex-col">
+                  <h4 className="text-sm font-oswald">
+                    {user ? <span>{userName}</span> : <span>Shoply</span>}
+                  </h4>
+                  <p className="text-sm">
+                    Sign in and subscribe to our newsletter to get new product
+                    updates.
+                  </p>
+                  {user ? null : (
+                    <div className="text-muted-foreground text-xs">
+                      <Link to="/signin">
+                        <section className="cursor-pointer font-oswald flex light bg-[rgb(var(--btnColor))] transition-all duration-300 p-1.5 rounded-[7px] space-x-2 justify-center">
+                          <p className="text-black">Sign in </p>
+                        </section>
+                      </Link>
+                      <Link to="/signup">
+                        <section className="p-1.5 text-green-900">
+                          Register
+                        </section>
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
-              <SheetFooter>
-                <SheetClose asChild></SheetClose>
-              </SheetFooter>
-            </SheetContent>
-          </Sheet>
+              <div className="flex">
+                <button
+                  onClick={() => setTheme("light")}
+                  className="bg-green-400 rounded-full p-2"
+                >
+                  <Sun strokeWidth={1.5} />
+                </button>
+                <button
+                  onClick={() => setTheme("dark2")}
+                  className="bg-black rounded-full p-2"
+                >
+                  <Moon color="green" strokeWidth={1.5} />
+                </button>
+              </div>
+            </PopoverContent>
+          </Popover>
 
           <div className="">
             <Menu className="size-5 md:hidden" />
           </div>
+
+         
         </div>
       </div>
     </>
