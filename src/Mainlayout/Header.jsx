@@ -83,7 +83,7 @@ function Header() {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isOpen, isOpenMenu]);
+  }, [isOpen, isOpenMenu, isOpenAcct]);
 
   const [theme1, setTheme1] = React.useState("system");
 
