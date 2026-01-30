@@ -1,4 +1,5 @@
 import {
+  ChevronRight,
   Menu,
   Moon,
   MoveRight,
@@ -76,6 +77,24 @@ function Header() {
     };
   }, [isOpen]);
 
+  const category = [
+    {
+      name: "Men",
+    },
+    {
+      name: "Women",
+    },
+    {
+      name: "Jordan",
+    },
+    {
+      name: "SKIMS",
+    },
+    {
+      name: "Sport",
+    },
+  ];
+
   return (
     <>
       <Toaster />
@@ -115,8 +134,6 @@ function Header() {
               </button>
             </PopoverTrigger>
             <PopoverContent className="w-72 md:w-96 font-oswald items-center flex flex-col justify-between h-[80vh] md:h-[95vh]">
-
-
               <div className="flex justify-between w-full">
                 <h1 className="text-xl text-center">My Cart</h1>
                 <PopoverClose className="rounded-full p-1 hover:bg-muted transition-colors outline-none">
@@ -124,7 +141,6 @@ function Header() {
                   <span className="sr-only">Close cart</span>
                 </PopoverClose>
               </div>
-
 
               <div className="w-full min-h-[40vh] overflow-y-scroll touch-action-none">
                 {cartItems.length > 0 ? (
@@ -258,9 +274,38 @@ function Header() {
             </PopoverContent>
           </Popover>
 
-          <div className="">
-            <Menu className="size-5 md:hidden" />
-          </div>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Menu className="size-5 md:hidden" />
+            </PopoverTrigger>
+            <PopoverContent className="w-72 font-oswald items-center flex flex-col h-[80vh] space-y-5">
+              <div className="flex justify-end w-full">
+                <PopoverClose className="rounded-full p-1 hover:bg-muted transition-colors outline-none">
+                  <X className="size-5" />
+                </PopoverClose>
+              </div>
+
+              <div className="w-full space-y-2">
+                {category.map((cate, index) => (
+                  <section key={index} className="flex justify-between">
+                    <p>{cate.name}</p>
+                    <ChevronRight />
+                  </section>
+                ))}
+              </div>
+
+              {user ? null : (
+                <div className="text-muted-foreground flex gap-2 text-xs">
+                  <Link to="/signin">
+                  <section className="font-oswald dark2 py-1.5 px-5 text-center bg-[rgb(29,76,69)] text-white flex justify-center items-center border rounded-full">Log in</section>
+                  </Link>
+                  <Link to="/signup">
+                  <section className="font-oswald py-1.5 px-5 text-center border-[rgb(29,76,69)] flex justify-center items-center border rounded-full">Register</section>
+                  </Link>
+                </div>
+              )}
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
     </>
