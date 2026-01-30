@@ -69,9 +69,10 @@ function Header() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isOpenAcct, setIsOpenAcct] = useState(false);
 
   useEffect(() => {
-    if (isOpen || isOpenMenu) {
+    if (isOpen || isOpenMenu || isOpenAcct) {
       // stop scrolling
       document.body.style.overflow = "hidden";
     } else {
@@ -126,7 +127,9 @@ function Header() {
         <div className="flex w-2/3 md:w-1/3 items-center justify-end gap-1 md:gap-3">
           {/* ShopSearch */}
           <ShopSearch />
+
           {/* cart */}
+
           <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
               <button
@@ -229,9 +232,10 @@ function Header() {
               </button>
             </PopoverContent>
           </Popover>
+
           {/* User Account */}
 
-          <Popover open={isOpenMenu} onOpenChange={setIsOpenMenu}>
+          <Popover open={isOpenAcct} onOpenChange={setIsOpenAcct}>
             <PopoverTrigger asChild>
               <UserRound className="cursor-pointer size-5" />
             </PopoverTrigger>
@@ -283,7 +287,8 @@ function Header() {
             </PopoverContent>
           </Popover>
 
-          <Popover>
+          {/* mobile menu */}
+          <Popover open={isOpenMenu} onOpenChange={setIsOpenMenu}>
             <PopoverTrigger asChild>
               <Menu className="size-5 md:hidden" />
             </PopoverTrigger>
