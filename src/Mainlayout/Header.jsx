@@ -5,20 +5,26 @@ import {
   Search,
   ShoppingCart,
   Sun,
+  User,
   UserRound,
   X,
 } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/Components/ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/Components/ui/hover-card";
 import { userContext } from "../Authentication/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import { ShopSearch } from "../Components/ShopSearch";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/Components/ui/sheet";
 function Header() {
   const {
     user,
@@ -81,13 +87,13 @@ function Header() {
           {/* ShopSearch */}
           <ShopSearch />
           {/* cart */}
-          <HoverCard>
-            <HoverCardTrigger asChild>
+          <Sheet>
+            <SheetTrigger asChild>
               <button
                 type="button"
                 className="relative inline-flex items-center justify-center h-10 w-10 rounded-full md:bg-muted cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <ShoppingCart className="size-5" />
+                <ShoppingCart className="size-4 md:size-5" />
 
                 {cartItems.length > 0 && (
                   <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full light bg-[rgb(var(--btnColor))] text-[11px] font-semibold text-white flex items-center justify-center ring-2 ring-background">
@@ -95,146 +101,165 @@ function Header() {
                   </span>
                 )}
               </button>
-            </HoverCardTrigger>
-
-            <HoverCardContent className="w-96 h-[90vh]">
-              <div className="w-full h-full font-oswald space-y-3 justify-between items-center flex flex-col">
-                <h1 className="text-xl">My Cart</h1>
-                {/* overflow cart */}
-                <div className="w-full min-h-[40vh] overflow-y-scroll">
-                  {cartItems.length > 0 ? (
-                    cartItems.map((product, index) => (
-                      <div
-                        key={index}
-                        className="flex w-full p-2 mb-2 gap-2 border-[#dcdcdc] border-[1px] rounded-[18px]"
-                      >
-                        <div
-                          style={{
-                            backgroundImage: `url(${product.imageUrl[0].secure_url})`,
-                          }}
-                          className="w-1/3 h-24 bg-cover bg-center rounded-[10px]"
-                        ></div>
-                        {/* </div> */}
-                        <div className="flex w-2/3 flex-col justify-between">
-                          <div className="flex justify-between">
-                            <p className="text-xs">{product.productName}</p>
-                            <X
-                              onClick={() => removeItem(product.productId)}
-                              className="cursor-pointer"
-                            />
-                          </div>
-                          <p>${product.price}</p>
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    // <div>{cartItems.length} hello</div>
-                    <div className="w-full h-full flex flex-col justify-center items-center">
-                      <p className="">Your cart is empty</p>
-                      <img
-                        src="/crt.png"
-                        className="w-fit h-28"
-                        alt=""
-                        // srcset=""
-                      />
-                    </div>
-                  )}
-                </div>
-
-                {/* total */}
+            </SheetTrigger>
+            <SheetContent className="font-oswald">
+              <SheetHeader>
+                <SheetTitle className="text-xl text-center font-light">
+                  My Cart
+                </SheetTitle>
+                <SheetDescription className="text-center">
+                  Review cart here. Click Checkout to proceed to payment.
+                </SheetDescription>
+              </SheetHeader>
+              {/* overflow cart */}
+              <div className="w-full min-h-[40vh] overflow-y-scroll touch-action-none">
                 {cartItems.length > 0 ? (
-                  <div className="flex flex-col w-full">
-                    {/* <span className="h-0.5 w-full bg-[#dcdcdc] mb-3"></span> */}
-
-                    <div className="flex justify-between">
-                      <p>sub-total</p>
-                      <p>${totalPrice}</p>
+                  cartItems.map((product, index) => (
+                    <div
+                      key={index}
+                      className="flex w-full p-2 mb-2 gap-2 border-[#dcdcdc] border-[1px] rounded-[18px]"
+                    >
+                      <div
+                        style={{
+                          backgroundImage: `url(${product.imageUrl[0].secure_url})`,
+                        }}
+                        className="w-1/3 h-24 bg-cover bg-center rounded-[10px]"
+                      ></div>
+                      {/* </div> */}
+                      <div className="flex w-2/3 flex-col justify-between">
+                        <div className="flex justify-between">
+                          <p className="text-xs">{product.productName}</p>
+                          <X
+                            onClick={() => removeItem(product.productId)}
+                            className="cursor-pointer"
+                          />
+                        </div>
+                        <p>${product.price}</p>
+                      </div>
                     </div>
-                    <div className="flex justify-between">
-                      <p>tax rate</p>
-                      <p>5%</p>
-                    </div>
-                    <div className="flex justify-between">
-                      <p>total items</p>
-                      <p>{cartItems.length}</p>
-                    </div>
-                    <span className="h-0.5 w-full bg-[#dcdcdc] mt-3"></span>
-                    <div className="flex justify-between">
-                      <p>Total Price</p>
-                      <p>${Math.round(totalPrice + totalPrice * 0.05)}</p>
-                    </div>
+                  ))
+                ) : (
+                  // <div>{cartItems.length} hello</div>
+                  <div className="w-full h-full flex flex-col justify-center items-center">
+                    <p className="">Your cart is empty</p>
+                    <img
+                      src="/crt.png"
+                      className="w-fit h-28"
+                      alt=""
+                      // srcset=""
+                    />
                   </div>
-                ) : null}
+                )}
+              </div>
 
-                <button
+              {/* total */}
+              {cartItems.length > 0 ? (
+                <div className="flex flex-col w-full">
+                  {/* <span className="h-0.5 w-full bg-[#dcdcdc] mb-3"></span> */}
+
+                  <div className="flex justify-between">
+                    <p>sub-total</p>
+                    <p>${totalPrice}</p>
+                  </div>
+                  <div className="flex justify-between">
+                    <p>tax rate</p>
+                    <p>5%</p>
+                  </div>
+                  <div className="flex justify-between">
+                    <p>total items</p>
+                    <p>{cartItems.length}</p>
+                  </div>
+                  <span className="h-0.5 w-full bg-[#dcdcdc] mt-3"></span>
+                  <div className="flex justify-between">
+                    <p>Total Price</p>
+                    <p>${Math.round(totalPrice + totalPrice * 0.05)}</p>
+                  </div>
+                </div>
+              ) : null}
+              <SheetFooter>
+                <Button
                   style={{
                     cursor: cartItems.length === 0 ? "not-allowed" : "pointer",
                     opacity: cartItems.length === 0 ? 0.6 : 1,
                   }}
                   disabled={cartItems.length === 0}
                   className="flex items-center gap-2 light bg-[rgb(var(--btnColor))] rounded-[5px] p-1.5 px-4 cursor-pointer"
+                  type="submit"
                 >
-                  <p>Proceed To Checkout</p> <MoveRight />
-                </button>
-              </div>
-            </HoverCardContent>
-          </HoverCard>
+                  Proceed To Checkout <MoveRight />
+                </Button>
+                <SheetClose asChild>
+                  <Button variant="outline">Close</Button>
+                </SheetClose>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
           {/* User Account */}
-          <HoverCard>
-            <HoverCardTrigger asChild>
-              {/* <Button variant="link"> */}
+
+          <Sheet className="h-[70vh]">
+            <SheetTrigger asChild>
               <UserRound className="cursor-pointer size-5" />
-              {/* </Button> */}
-            </HoverCardTrigger>
-            <HoverCardContent className="w-80">
-              <div className="flex  gap-4">
-                {/* <Avatar>
-            <AvatarImage src="https://github.com/vercel.png" />
-            <AvatarFallback>VC</AvatarFallback>
-            </Avatar> */}
-                <Link to="/user/account">
-                  <section className="bg-[#bdbdbd] rounded-full h-fit p-2">
-                    <UserRound className="cursor-pointer" />
-                  </section>
-                </Link>
-                <div className="space-y-1 flex flex-col">
-                  <h4 className="text-sm font-oswald">
-                    {user ? <span>{userName}</span> : <span>Shoply</span>}
-                  </h4>
-                  <p className="text-sm">
-                    Sign in and subscribe to our newsletter to get new product
-                    updates.
-                  </p>
-                  {user ? null : (
-                    <div className="text-muted-foreground text-xs">
-                      <Link to="/signin">
-                        <section className="cursor-pointer font-oswald flex light bg-[rgb(var(--btnColor))] transition-all duration-300 p-1.5 rounded-[7px] space-x-2 justify-center">
-                          <p className="text-black">Sign in </p>
-                        </section>
-                      </Link>
-                      <Link to="/signup">
-                        <Button variant="link">Register</Button>
-                      </Link>
-                    </div>
-                  )}
+            </SheetTrigger>
+            <SheetContent className="font-oswald h-fit rounded-2xl top-[9vh] right-1 bottom-[5vh]">
+              <SheetHeader>
+                <SheetTitle></SheetTitle>
+                <SheetDescription className="text-center">
+                  {/* Review cart here. Click Checkout to proceed to payment. */}
+                </SheetDescription>
+              </SheetHeader>
+
+              <div className="px-4">
+                <div className="flex  gap-4">
+                  <Link to="/user/account">
+                    <section className="bg-[#bdbdbd] rounded-full h-fit p-2">
+                      <UserRound className="cursor-pointer" />
+                    </section>
+                  </Link>
+                  <div className="space-y-1 flex flex-col">
+                    <h4 className="text-sm font-oswald">
+                      {user ? <span>{userName}</span> : <span>Shoply</span>}
+                    </h4>
+                    <p className="text-sm">
+                      Sign in and subscribe to our newsletter to get new product
+                      updates.
+                    </p>
+                    {user ? null : (
+                      <div className="text-muted-foreground text-xs">
+                        <Link to="/signin">
+                          <section className="cursor-pointer font-oswald flex light bg-[rgb(var(--btnColor))] transition-all duration-300 p-1.5 rounded-[7px] space-x-2 justify-center">
+                            <p className="text-black">Sign in </p>
+                          </section>
+                        </Link>
+                        <Link to="/signup">
+                          <section className="p-1.5 text-green-900">
+                            Register
+                          </section>
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="flex">
+                  <button
+                    onClick={() => setTheme("light")}
+                    className="bg-green-400 rounded-full p-2"
+                  >
+                    <Sun strokeWidth={1.5} />
+                  </button>
+                  <button
+                    onClick={() => setTheme("dark2")}
+                    className="bg-black rounded-full p-2"
+                  >
+                    <Moon color="green" strokeWidth={1.5} />
+                  </button>
                 </div>
               </div>
-              <div className="flex">
-                <button
-                  onClick={() => setTheme("light")}
-                  className="bg-green-400 rounded-full p-2"
-                >
-                  <Sun strokeWidth={1.5} />
-                </button>
-                <button
-                  onClick={() => setTheme("dark2")}
-                  className="bg-black rounded-full p-2"
-                >
-                  <Moon color="green" strokeWidth={1.5} />
-                </button>
-              </div>
-            </HoverCardContent>
-          </HoverCard>
+              <SheetFooter>
+                <SheetClose asChild></SheetClose>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
+
           <div className="">
             <Menu className="size-5 md:hidden" />
           </div>
