@@ -68,9 +68,10 @@ function Header() {
   }
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen || isOpenMenu) {
       // stop scrolling
       document.body.style.overflow = "hidden";
     } else {
@@ -81,7 +82,7 @@ function Header() {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isOpen]);
+  }, [isOpen, isOpenMenu]);
 
   const [theme1, setTheme1] = React.useState("system");
 
@@ -230,7 +231,7 @@ function Header() {
           </Popover>
           {/* User Account */}
 
-          <Popover>
+          <Popover open={isOpenMenu} onOpenChange={setIsOpenMenu}>
             <PopoverTrigger asChild>
               <UserRound className="cursor-pointer size-5" />
             </PopoverTrigger>
