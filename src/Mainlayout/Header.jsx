@@ -113,8 +113,12 @@ function Header() {
       <Toaster />
       <div className="w-full h-12 bg-white flex sticky items-center md:justify-between md:px-10 px-5">
         <div className="flex w-1/3 md:w-1/3 items-center justify-start gap-1">
-          <img src="/logo.svg" className="size-7" alt="" />
-          <p className="font-oswald text-xl">Shoply</p>
+          <Link to="/">
+            <div className="flex justify-center items-center">
+              <img src="/logo.svg" className="size-7" alt="" />
+              <p className="font-oswald text-xl">Shoply</p>
+            </div>
+          </Link>
         </div>
         <div className="hidden md:flex w-1/3 font-oswald font-light items-center justify-evenly">
           <p className="">
@@ -356,21 +360,21 @@ function Header() {
 
               <div className="font-oswald w-full space-y-2">
                 <div className="flex gap-3">
-                  <Home strokeWidth={1.2} />
+                  <Home strokeWidth={1.25} />
                   <p className="">
                     <Link to="/">Home</Link>
                   </p>
                 </div>
 
                 <div className="flex gap-3">
-                  <Store strokeWidth={1.2} />
+                  <Store strokeWidth={1.25} />
                   <p className="">
                     <Link to="/shop">Shop</Link>
                   </p>
                 </div>
 
                 <div className="flex gap-3">
-                  <Bookmark strokeWidth={1.2} />
+                  <Bookmark strokeWidth={1.25} />
                   <p className="">
                     <Link to="#">Blog</Link>
                   </p>

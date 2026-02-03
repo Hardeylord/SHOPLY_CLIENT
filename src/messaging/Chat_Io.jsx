@@ -17,6 +17,7 @@ import {
   LogOut,
   MessageSquare,
   SendHorizontal,
+  RefreshCwIcon,
 } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
@@ -104,6 +105,8 @@ const Chat_Io = () => {
     ) {
       setchatMessages((prv) => [...prv, message]);
     }
+
+    fetchDisplayConnectedUsers()
   }
 
   async function userToChatWith(params) {
