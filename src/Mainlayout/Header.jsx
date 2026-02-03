@@ -1,9 +1,12 @@
 import {
+  Bookmark,
   ChevronRight,
+  Home,
   Menu,
   Moon,
   MoveRight,
   ShoppingCart,
+  Store,
   Sun,
   SunMoon,
   UserRound,
@@ -108,7 +111,7 @@ function Header() {
   return (
     <>
       <Toaster />
-      <div className="w-full h-12 bg-white flex items-center md:justify-between md:px-10 px-5">
+      <div className="w-full h-12 bg-white flex sticky items-center md:justify-between md:px-10 px-5">
         <div className="flex w-1/3 md:w-1/3 items-center justify-start gap-1">
           <img src="/logo.svg" className="size-7" alt="" />
           <p className="font-oswald text-xl">Shoply</p>
@@ -145,7 +148,7 @@ function Header() {
                 )}
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-72 md:w-96 font-oswald items-center flex flex-col justify-between h-[80vh] md:h-[95vh]">
+            <PopoverContent className="w-72 md:w-96 font-oswald items-center flex flex-col justify-between h-[80vh] md:h-[90vh]">
               <div className="flex justify-between w-full">
                 <h1 className="text-xl text-center">My Cart</h1>
                 <PopoverClose className="rounded-full p-1 hover:bg-muted transition-colors outline-none">
@@ -350,6 +353,29 @@ function Header() {
                   </MenubarContent>
                 </MenubarMenu>
               </Menubar>
+
+              <div className="font-oswald w-full space-y-2">
+                <div className="flex gap-3">
+                  <Home strokeWidth={1.2} />
+                  <p className="">
+                    <Link to="/">Home</Link>
+                  </p>
+                </div>
+
+                <div className="flex gap-3">
+                  <Store strokeWidth={1.2} />
+                  <p className="">
+                    <Link to="/shop">Shop</Link>
+                  </p>
+                </div>
+
+                <div className="flex gap-3">
+                  <Bookmark strokeWidth={1.2} />
+                  <p className="">
+                    <Link to="#">Blog</Link>
+                  </p>
+                </div>
+              </div>
             </PopoverContent>
           </Popover>
         </div>

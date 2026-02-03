@@ -16,9 +16,7 @@ import {
   Handshake,
   LogOut,
   MessageSquare,
-  Pointer,
   SendHorizontal,
-  UserRound,
 } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
@@ -195,7 +193,7 @@ const Chat_Io = () => {
               <p className="text-xs font-montserrat">Chat with vendor</p>
             </div>
           </DialogTrigger>
-          <DialogContent className="bg-black p-3 text-white border-[#7c7c7c] flex  h-[55vh] sm:max-w-[600px]">
+          <DialogContent className="bg-black p-3 text-white border-[#7c7c7c] flex  h-[55vh] sm:max-w-150">
             <DialogHeader className="sr-only">
               <DialogTitle className="sr-only">
                 Negotiate Price with...
@@ -207,7 +205,7 @@ const Chat_Io = () => {
             </DialogHeader>
             <div className="w-full h-full gap-2 flex font-oswald">
               {/* conn user */}
-              <div className="w-1/3 border-[1px] border-[#464646] p-2 rounded-xl h-full flex flex-col justify-between">
+              <div className="w-1/3 border border-[#464646] p-2 rounded-xl h-full flex flex-col justify-between">
                 <div className="flex gap-2 items-center">
                   <section className="relative text-black inline-flex items-center justify-center size-8 rounded-full bg-muted cursor-pointer">
                     <p>{userName.substring(0, 1).toUpperCase()}</p>
@@ -257,7 +255,7 @@ const Chat_Io = () => {
               </div>
 
               {/* chatbox */}
-              <div className="w-2/3 h-full border-[1px] border-[#464646] flex flex-col justify-between p-2 rounded-xl">
+              <div className="w-2/3 h-full border border-[#464646] flex flex-col justify-between p-2 rounded-xl">
                 {whoToText ? (
                   <div className="w-full  h-full flex flex-col justify-between">
                     {/* chats bg-[url(/chatsBg.png)]*/}
@@ -281,7 +279,7 @@ const Chat_Io = () => {
                                     ? "#00b800"
                                     : "#263d54",
                               }}
-                              className="py-2 px-3 rounded-2xl max-w-[70%] break-words"
+                              className="py-2 px-3 rounded-2xl max-w-[70%] wrap-break-word"
                             >
                               <p className="font-light">{message.content}</p>
                             </div>

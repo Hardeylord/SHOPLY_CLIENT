@@ -70,6 +70,7 @@ export const Auth = ({ children }) => {
         const newToken = await resp.text();
         const token = jwtDecode(newToken);
         setBearerToken(newToken);
+        myCart()
         // jwtCookie.set("jwt", newToken);
         setUser(true);
         setUserRole(token.role);
@@ -119,6 +120,7 @@ export const Auth = ({ children }) => {
           const decoded = jwtDecode(bearerToken);
           if (!isMounted) return;
 
+          myCart()
           setUser(true);
           setUserInfo(decoded);
           setUserRole(decoded.role);
@@ -143,7 +145,7 @@ export const Auth = ({ children }) => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [bearerToken]);
 
   return (
     <userContext.Provider
