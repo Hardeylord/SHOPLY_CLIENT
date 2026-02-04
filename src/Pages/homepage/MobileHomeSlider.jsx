@@ -16,19 +16,19 @@ export const MobileHomeSlider = ({ themes }) => {
   const nextRef = useRef(null);
 
   const [slide, setSlide] = useState(0);
-  function nextSlide() {
-    setSlide((prv) => prv + 1);
-  }
+  // function nextSlide() {
+  //   setSlide((prv) => prv + 1);
+  // }
 
-  function prvSlide() {
-    setSlide((prv) => prv - 1);
-  }
+  // function prvSlide() {
+  //   setSlide((prv) => prv - 1);
+  // }
   return (
     <>
       <div
         className={`${
           themes === "light" ? "light" : "dark2"
-        } w-full h-[95vh] flex flex-col gap-4 bg-[rgb(var(--BgColor))] text-[rgb(var(--textColor))] space-y-2 mb-10 px-8 md:px-20 py-2 mt-20 `}
+        } w-full h-[95vh] flex flex-col gap-4 bg-[rgb(var(--BgColor))] text-[rgb(var(--textColor))] space-y-2 px-8 py-2 mt-20 `}
       >
         <section className="flex flex-col md:flex-row md:justify-between">
           <p className="font-oswald text-3xl">Crafted for the youth</p>
@@ -41,6 +41,9 @@ export const MobileHomeSlider = ({ themes }) => {
           <Swiper
             effect={"cards"}
             grabCursor={true}
+            onSlideChange={(swiper) => {
+              setSlide(swiper.activeIndex);
+            }}
             modules={[EffectCards, Navigation]}
             className="mySwiper"
             cardsEffect={{
@@ -79,7 +82,7 @@ export const MobileHomeSlider = ({ themes }) => {
           </div>
 
           {/* Navigation */}
-          <div className="flex gap-1">
+          {/* <div className="flex gap-1">
             <button
               ref={prevRef}
               onClick={() => prvSlide()}
@@ -94,7 +97,7 @@ export const MobileHomeSlider = ({ themes }) => {
             >
               <MoveRight color="white" />
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
