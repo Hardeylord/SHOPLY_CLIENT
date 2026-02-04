@@ -28,11 +28,11 @@ export const MobileHomeSlider = ({ themes }) => {
       <div
         className={`${
           themes === "light" ? "light" : "dark2"
-        } w-full h-[95vh] flex flex-col gap-4 bg-[rgb(var(--BgColor))] text-[rgb(var(--textColor))] space-y-2 px-8 py-2 mt-20 `}
+        } w-full h-fit flex flex-col justify-center gap-4 bg-[rgb(var(--BgColor))] text-[rgb(var(--textColor))] space-y-2 px-8 py-2 mt-10 mb-20 `}
       >
-        <section className="flex flex-col md:flex-row md:justify-between">
+        <section className="flex flex-col">
           <p className="font-oswald text-3xl">Crafted for the youth</p>
-          <p className="sm:text-base md:text-end font-oswald font-light">
+          <p className="text-base  font-oswald font-light">
             Its everything you need and nothing more. <br></br> A collection of
             product extremely practical, both on the inside and out
           </p>

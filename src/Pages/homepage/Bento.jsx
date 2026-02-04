@@ -3,7 +3,7 @@ import React from "react";
 
 const Bento = ({themes}) => {
   return (
-    <div className={`${themes === "light" ? "" : "dark2"} text-[rgb(var(--textColor))] mt-20 font-oswald px-8 md:px-10 space-y-3`}>
+    <div className={`${themes === "light" ? "" : "dark2"} text-[rgb(var(--textColor))] md:mt-20 font-oswald px-8 md:px-10 space-y-3`}>
       <p className="text-3xl">ELEVATE YOUR ELEGANT FASHION</p>
       <p className="font-light">
         Daily Classics Let You Make Them Yours Every Day. Redefining
