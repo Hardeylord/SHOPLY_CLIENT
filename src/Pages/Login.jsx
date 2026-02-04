@@ -1,10 +1,8 @@
 import { React, useContext, useEffect, useState } from "react";
 import { userContext } from "../Authentication/AuthContext";
-import Cookies from "universal-cookie";
 import { jwtDecode } from "jwt-decode";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-
 export const Login = () => {
   const gallery = [
     {
@@ -27,6 +25,7 @@ export const Login = () => {
     },
   ];
 
+
   const [currenIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ export const Login = () => {
   }, [currenIndex]);
 
   const navigate = useNavigate();
-  const { setUser, setUserRole, setBearerToken, setUserName } =
+  const { setUser, setUserRole, setBearerToken, setUserName, theme } =
     useContext(userContext);
 
   const [userInfo, setUserInfo] = useState({
@@ -99,11 +98,11 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-row items-center justify-center gap-4  p-4">
+    <div className={`${theme === "light" ? "light" : "dark2"} h-screen md:min-h-screen flex flex-col bg-[rgb(var(--BgColor))] md:flex-row items-center justify-center gap-4  md:p-4 text-[rgb(var(--textColor))]`}>
       <Toaster />
-      <div className="w-1/3  bg-white rounded-xl  p-8 space-y-6">
-        <h2 className="text-3xl font-oswald text-center text-gray-900">
-          Sign In to Your Account
+      <div className=" md:w-1/3 rounded-xl  px-8 space-y-6">
+        <h2 className="text-3xl font-oswald text-center">
+         Welcome back <br /> Sign In to Your Account
         </h2>
 
         {/* Error Message Display */}
@@ -117,7 +116,7 @@ export const Login = () => {
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-montserrat text-gray-700 mb-1"
+              className="block text-sm font-montserrat  mb-1"
             >
               Email
             </label>
@@ -126,7 +125,7 @@ export const Login = () => {
               name="username"
               type="text"
               required
-              className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-300 focus:border-green-300 sm:text-sm transition duration-150"
+              className="appearance-none block w-full px-4 py-3 border border-gray-300 text-white rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-300  sm:text-sm transition duration-150"
               placeholder="shoply@gmail.com"
               onChange={getVal}
             />
@@ -135,7 +134,7 @@ export const Login = () => {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-montserrat text-gray-700 mb-1"
+              className="block text-sm font-montserrat  mb-1"
             >
               Password
             </label>
@@ -145,22 +144,22 @@ export const Login = () => {
               type="password"
               onChange={getVal}
               required
-              className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-300 focus:border-green-300 sm:text-sm transition duration-150"
+              className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-300 sm:text-sm transition duration-150"
               placeholder="••••••••"
             />
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col space-y-3 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center">
               <input
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                className="h-4 w-4   focus:ring-green-500 border-gray-300 rounded"
               />
               <label
                 htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
+                className="ml-2 block text-sm"
               >
                 Remember me
               </label>
@@ -169,7 +168,7 @@ export const Login = () => {
             <div className="text-sm">
               <a
                 href="#"
-                className="font-montserrat text-green-600 hover:text-green-500"
+                className="font-montserrat hover:text-green-500"
               >
                 Forgot your password?
               </a>
@@ -179,7 +178,7 @@ export const Login = () => {
           <div>
             <button
               type="submit"
-              className="w-full cursor-pointer flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-montserrat text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+              className="w-full cursor-pointer flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-montserrat text-white bg-[rgb(var(--btnColor))] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
             >
               Sign In
             </button>
@@ -187,11 +186,11 @@ export const Login = () => {
         </form>
 
         <div className="text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm">
             Don't have an account?
             <Link
               to="/signup"
-              className="font-montserrat text-green-600 hover:text-green-500 ml-1"
+              className="font-montserrat hover:text-[rgb(var(--btnColor))] ml-1"
             >
               Sign up
             </Link>
@@ -202,7 +201,7 @@ export const Login = () => {
         style={{
           backgroundImage: `url(${gallery[currenIndex].imageUrl})`,
         }}
-        className="w-2/3 p-8 relative bg-cover flex items-end bg-center rounded-tl-4xl rounded-br-4xl h-[90vh]"
+        className="w-2/3 p-8 relative bg-cover hidden md:flex items-end bg-center rounded-tl-4xl rounded-br-4xl h-[90vh]"
       >
         <div className="absolute inset-0 bg-black/40 flex items-center rounded-tl-4xl rounded-br-4xl justify-center" />
         <div className="z-30">

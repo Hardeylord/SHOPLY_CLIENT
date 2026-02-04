@@ -13,7 +13,7 @@ export const Auth = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [bearerToken, setBearerToken] = useState(null);
   const [userName, setUserName] = useState(null);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark2");
 
   const roles = {
     Admin: "ADMIN",
