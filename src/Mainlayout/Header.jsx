@@ -111,7 +111,7 @@ function Header() {
   return (
     <>
       <Toaster />
-      <div className="w-full h-12 bg-white flex sticky items-center md:justify-between md:px-10 px-5">
+      <div className="w-full h-12 bg-white flex fixed z-50 items-center md:justify-between md:px-10 px-5">
         <div className="flex w-1/3 md:w-1/3 items-center justify-start gap-1">
           <Link to="/">
             <div className="flex justify-center items-center">
