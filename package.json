@@ -34,6 +34,7 @@
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.9.3",
     "sockjs-client": "^1.6.1",
+    "swiper": "^12.1.0",
     "tailwind-merge": "^3.3.1",
     "universal-cookie": "^8.0.1"
   },

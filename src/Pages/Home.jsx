@@ -8,7 +8,6 @@ import { HomeSlide } from "./homepage/HomeSlide";
 import Bento from "./homepage/Bento";
 import Newsletter from "./homepage/Newsletter";
 import { userContext } from "../Authentication/AuthContext";
-
 // import { Checkbox } from "@/components/ui/checkbox";
 export const Home = () => {
   const { theme } = useContext(userContext);
