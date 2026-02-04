@@ -83,7 +83,7 @@ const SignUp = () => {
   };
   return (
     <div className={`${theme === "light" ? "light" : "dark2"} bg-[rgb(var(--BgColor))] h-screen md:min-h-screen flex flex-col md:flex-row items-center text-[rgb(var(--textColor))] justify-center gap-4  md:p-4`}>
-      <div className="md:w-1/3 rounded-xl md:p-8 space-y-6">
+      <div className="w-full md:w-1/3 rounded-xl p-8 space-y-6">
         <h2 className="text-3xl font-oswald text-center">
           Create An Account
         </h2>

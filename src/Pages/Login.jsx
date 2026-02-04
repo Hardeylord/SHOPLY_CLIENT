@@ -100,7 +100,7 @@ export const Login = () => {
   return (
     <div className={`${theme === "light" ? "light" : "dark2"} h-screen md:min-h-screen flex flex-col bg-[rgb(var(--BgColor))] md:flex-row items-center justify-center gap-4  md:p-4 text-[rgb(var(--textColor))]`}>
       <Toaster />
-      <div className=" md:w-1/3 rounded-xl  px-8 space-y-6">
+      <div className="w-full md:w-1/3 rounded-xl  px-8 space-y-6">
         <h2 className="text-3xl font-oswald text-center">
          Welcome back <br /> Sign In to Your Account
         </h2>
