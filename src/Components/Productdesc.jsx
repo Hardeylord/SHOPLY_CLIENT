@@ -50,18 +50,18 @@ const Productdesc = () => {
       {/* description */}
       <div className='w-1/2 flex flex-col justify-evenly'>
       <div>
-        <button className='px-4 border-[1px] border-[#dcdcdc] rounded-full py-1.5'>Man Fashion</button>
+        <button className='px-4 border border-[#dcdcdc] rounded-full py-1.5'>Man Fashion</button>
         <p className='font-oswald text-2xl'>{fullProduct.name}</p>
         <p className='font-oswald text-xl'>${fullProduct.price}</p>
       </div>
       <div>
-        <section className='px-4 py-2 rounded-2xl border-[1px] border-[#dcdcdc]'>
+        <section className='px-4 py-2 rounded-2xl border border-[#dcdcdc]'>
           <p className='font-oswald text-2xl'>Description</p>
           <p className='font-montserrat'>{fullProduct.desc}</p>
         </section>
       </div>
       <div>
-      <section className='px-4 space-y-6 py-2 rounded-2xl border-[1px] border-[#dcdcdc]'>
+      <section className='px-4 space-y-6 py-2 rounded-2xl border border-[#dcdcdc]'>
           <p className='font-oswald text-2xl'>Shipping</p>
           <div className='w-full space-y-4 flex'>
             {/* discount */}

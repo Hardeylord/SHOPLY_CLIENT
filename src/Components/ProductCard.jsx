@@ -131,7 +131,7 @@ function ProductCard(props) {
               ? "/noImage.jpg"
               : props.pImage[0].secure_url
           }
-          className="w-full h-[400px] rounded-3xl object-cover object-center"
+          className="w-full h-100 rounded-3xl object-cover object-center"
           alt=""
         />
       </div>

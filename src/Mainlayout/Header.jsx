@@ -166,7 +166,7 @@ function Header() {
                   cartItems.map((product, index) => (
                     <div
                       key={index}
-                      className="flex w-full p-2 mb-2 gap-2 border-[#dcdcdc] border-[1px] rounded-[18px]"
+                      className="flex w-full p-2 mb-2 gap-2 border-[#dcdcdc] border rounded-[18px]"
                     >
                       <div
                         style={{
