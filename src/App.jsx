@@ -14,6 +14,7 @@ import SignUp from "./Pages/SignUp";
 import { Account } from "./Pages/Accounts/Account";
 import { AccountLayout } from "./Mainlayout/AccountLayout";
 import { UpgradeAccount } from "./Pages/Accounts/UpgradeAccount";
+import { Sales } from "./Dashboard/Sales";
 
 function App() {
   const { LogOut, user, loading, roles, userRole, isLoading } = useContext(userContext);
@@ -62,6 +63,7 @@ function App() {
           >
             <Route path="admin" element={<Dashboard />} />
             <Route path="addproduct" element={<Addproduct />} />
+            <Route path="sales" element={<Sales/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -3,6 +3,7 @@ import {
   BanknoteArrowDown,
   BellDot,
   ChartArea,
+  ChevronLeft,
   CreditCard,
   LogOut,
   MessagesSquare,
@@ -22,9 +23,12 @@ export const DashsideBar = () => {
   return (
     <div className="text-[#3d3d3d]">
       <Link to='/'>
-      <div className="flex justify-center mb-2">
+      <div className="flex relative justify-center mb-2">
         <img src="/logo.svg" className="size-7" alt="" />
         <p className="font-oswald text-xl">Shoply</p>
+        <section className="p-0.5 absolute -right-7 z-20 bg-[#efefef] rounded-full cursor-pointer">
+        <ChevronLeft/>
+        </section>
       </div>
       </Link>
       {/* main men */}
@@ -49,11 +53,12 @@ export const DashsideBar = () => {
             </section>
           </Link>
 
-          
+          <Link to="/dashboard/sales">
           <section className="flex cursor-pointer hover:bg-green-300 transition-all duration-300 p-1.5 rounded-[5px] space-x-2 items-center">
             <BadgeDollarSign size={16} strokeWidth={1.25} />
             <p>Sales</p>
           </section>
+          </Link>
         </div>
       </div>
       {/* Transaction */}

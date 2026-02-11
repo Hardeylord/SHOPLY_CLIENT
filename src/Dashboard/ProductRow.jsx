@@ -1,17 +1,23 @@
 import {
   Check,
-  CircleX,
   ImagePlus,
   PackagePlus,
-  Pen,
-  PenLine,
-  Plus,
   RefreshCw,
-  Star,
-  Trash,
-  Trash2,
   X,
 } from "lucide-react";
+import { Button } from "@/Components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
+import {
+  TableCell,
+  TableRow,
+} from "@/Components/ui/table";
+import { MoreHorizontalIcon } from "lucide-react";
 import React, { useEffect } from "react";
 import {
   AlertDialog,
@@ -34,7 +40,6 @@ import {
 } from "@/Components/ui/dialog";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
-import Cookies from "universal-cookie";
 import { userContext } from "../Authentication/AuthContext";
 import { useContext } from "react";
 
@@ -81,7 +86,7 @@ export const ProductRow = (props) => {
     dataToJava.append("desc", formData.desc);
     dataToJava.append("price", formData.price);
     dataToJava.append("rating", formData.rating);
-    
+
     replacementId.forEach((imagesId) => {
       dataToJava.append("imageId", imagesId);
     });
@@ -101,7 +106,7 @@ export const ProductRow = (props) => {
           body: dataToJava,
         }
       );
-      
+
       if (response.ok) {
         toast.success("Product Succesfully Updated!");
         // window.location.reload();
@@ -110,7 +115,7 @@ export const ProductRow = (props) => {
       }
     } catch (error) {
       toast.error(error);
-    } finally{
+    } finally {
     }
   };
 
@@ -186,10 +191,10 @@ export const ProductRow = (props) => {
 
   return (
     <>
-      <Toaster />
-    
-      <div className="flex w-full items-center space-x-10">
-        <div className="w-1/6">
+
+      {/* <Toaster /> */}
+      <TableRow>
+        <TableCell>
           <div className="rounded-xs w-fit p-1 bg-white">
             <img
               src={
@@ -201,245 +206,257 @@ export const ProductRow = (props) => {
               alt=""
             />
           </div>
-        </div>
-        <div className="w-2/6">
-          <p className="text-[12px] font-oswald">{props.pName} </p>
-        </div>
-        <div className="w-1/6">
-          <p className="text-[12px] font-oswald">${props.pPrice} </p>
-        </div>
-        <div className="w-1/6">
-          <p className="text-[12px] font-oswald">{props.pRating} </p>
-        </div>
-        <div className="w-1/6">
-          <Dialog>
-            <DialogTrigger
-            //  onClick={logged}
-            >
-              <section className="flex px-2 py-1 cursor-pointer hover:bg-green-200 bg-green-300 transition-all duration-300 rounded-[5px] space-x-2 items-center">
-                <Plus size={16} strokeWidth={1.25} />
-                <p className="font-oswald">Edit</p>
-              </section>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[800px]">
-              <DialogHeader>
-                <DialogTitle className="flex space-x-2 items-center">
-                  <PackagePlus size={16} strokeWidth={1.25} />{" "}
-                  <p className="font-oswald">Edit</p>
-                </DialogTitle>
-                <DialogDescription className="font-montserrat text-xl font-medium text-green-600">
-                  {props.pName}
-                </DialogDescription>
-              </DialogHeader>
-              <div className="w-full flex gap-4">
-                <div className="bg-[#f6f6f6] w-1/2 font-oswald p-4 rounded-[10px]">
-                  <form
-                    onSubmit={(e) => handleEdit(e, props.id)}
-                    className="flex flex-col space-y-4"
-                    action=""
-                    method="PUT"
+        </TableCell>
+        <TableCell className="font-medium">{props.pName}</TableCell>
+        <TableCell>${props.pPrice}</TableCell>
+        <TableCell>{props.pRating}</TableCell>
+        <TableCell className="text-right">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="size-8">
+                <MoreHorizontalIcon />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+
+
+              {/* Edit */}
+              <div className="w-1/6">
+                <Dialog>
+                  <DialogTrigger
+                  //  onClick={logged}
                   >
-                    <label htmlFor="name">Product Name:</label>
-                    <input
-                      name="name"
-                      className="inputField"
-                      type="text"
-                      placeholder="name"
-                      onChange={getVal}
-                      required
-                      value={formData.name}
-                    />
+                    <section className="flex w-28 px-2 py-1 cursor-pointer hover:bg-muted transition-all duration-300 rounded-[5px] ">
+                      <p className=" text-sm">Edit</p>
+                    </section>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-200">
+                    <DialogHeader>
+                      <DialogTitle className="flex space-x-2 items-center">
+                        <PackagePlus size={16} strokeWidth={1.25} />{" "}
+                        <p className="font-oswald">Edit</p>
+                      </DialogTitle>
+                      <DialogDescription className="font-montserrat text-xl font-medium text-green-600">
+                        {props.pName}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="w-full flex gap-4">
+                      <div className="bg-[#f6f6f6] w-1/2 font-oswald p-4 rounded-[10px]">
+                        <form
+                          onSubmit={(e) => handleEdit(e, props.id)}
+                          className="flex flex-col space-y-4"
+                          action=""
+                          method="PUT"
+                        >
+                          <label htmlFor="name">Product Name:</label>
+                          <input
+                            name="name"
+                            className="inputField"
+                            type="text"
+                            placeholder="name"
+                            onChange={getVal}
+                            required
+                            value={formData.name}
+                          />
 
-                    <label htmlFor="description">Product Description:</label>
-                    <textarea
-                      className="inputField"
-                      name="desc"
-                      id=""
-                      cols="30"
-                      rows="5"
-                      required
-                      onChange={getVal}
-                      value={formData.desc}
-                    ></textarea>
+                          <label htmlFor="description">
+                            Product Description:
+                          </label>
+                          <textarea
+                            className="inputField"
+                            name="desc"
+                            id=""
+                            cols="30"
+                            rows="5"
+                            required
+                            onChange={getVal}
+                            value={formData.desc}
+                          ></textarea>
 
-                    <div className="flex w-full gap-4">
-                      <div className="flex w-1/2 flex-col">
-                        <label htmlFor="price">Product Price:</label>
-                        <input
-                          className=" inputField"
-                          name="price"
-                          type="text"
-                          placeholder="price"
-                          onChange={getVal}
-                          required
-                          value={formData.price}
-                        />
-                      </div>
-                      <div className="flex w-1/2 flex-col">
-                        <label htmlFor="rating">Rating:</label>
-                        <input
-                          className=" inputField"
-                          name="rating"
-                          type="text"
-                          placeholder="rating"
-                          onChange={getVal}
-                          required
-                          value={formData.rating}
-                        />
-                      </div>
-                    </div>
-                    <div className="w-full flex justify-center">
-                      {/* <DialogTrigger> */}
-                      <button
-                        type="submit"
-                        onClick={() =>
-                          console.log(replacementImage, replacementId)
-                        }
-                        className="flex justify-center w-[250px] cursor-pointer bg-green-300 transition-all duration-300 p-1.5 rounded-[5px] space-x-2 items-center"
-                      >
-                        <Check size={16} strokeWidth={1.35} />
-                        <p>Confirm Edit</p>
-                        <Toaster />
-                      </button>
-                      {/* </DialogTrigger> */}
-                    </div>
-                  </form>
-                </div>
-                <div className="w-1/2">
-                  <div className="flex-col gap-3 items-center justify-center w-full flex">
-                    <p className="text-center">Uploaded Images</p>
-                    <div className="flex gap-4">
-                      <input
-                        onChange={getImage}
-                        type="file"
-                        hidden
-                        id="imageFile"
-                      />
-                      <label
-                        htmlFor="imageFile"
-                        className="cursor-pointer flex justify-center items-center w-[200px] h-[150px] rounded-[10px] bg-[#dcdcdc] "
-                      >
-                        <ImagePlus size={16} strokeWidth={1.25} />
-                      </label>
-                    </div>
-                    <div className="w-full flex gap-2">
-                      {formData.image
-                        ? formData.image.map((image, index) => (
-                            <section
-                              style={{
-                                backgroundImage: `url(${image.secure_url})`,
-                                backgroundPosition: "center",
-                                backgroundSize: "cover",
-                                backgroundRepeat: "no-repeat",
-                              }}
-                              key={index}
-                              className="relative h-48 w-1/3"
-                            >
+                          <div className="flex w-full gap-4">
+                            <div className="flex w-1/2 flex-col">
+                              <label htmlFor="price">Product Price:</label>
                               <input
-                                type="file"
-                                hidden
-                                id="relImage"
-                                onChange={(e) =>
-                                  replaceImage(
-                                    image.secure_url,
-                                    e,
-                                    image.public_id
-                                  )
-                                }
+                                className=" inputField"
+                                name="price"
+                                type="text"
+                                placeholder="price"
+                                onChange={getVal}
+                                required
+                                value={formData.price}
                               />
-                              <label htmlFor="relImage">
-                                <RefreshCw
-                                  className="cursor-pointer absolute backdrop-blur-xs rounded-full right-1 top-1"
-                                  stroke="white"
-                                  strokeWidth={1}
-                                />
-                              </label>
-                            </section>
-                          ))
-                        : null}
-
-                      {replacementImage.length == 0
-                        ? null
-                        : replacementImage.map((image, index) => (
-                            <section
-                              style={{
-                                backgroundImage: `url(${URL.createObjectURL(
-                                  image
-                                )})`,
-                                backgroundPosition: "center",
-                                backgroundSize: "cover",
-                                backgroundRepeat: "no-repeat",
-                              }}
-                              key={index}
-                              className="relative h-48 w-1/3"
+                            </div>
+                            <div className="flex w-1/2 flex-col">
+                              <label htmlFor="rating">Rating:</label>
+                              <input
+                                className=" inputField"
+                                name="rating"
+                                type="text"
+                                placeholder="rating"
+                                onChange={getVal}
+                                required
+                                value={formData.rating}
+                              />
+                            </div>
+                          </div>
+                          <div className="w-full flex justify-center">
+                            {/* <DialogTrigger> */}
+                            <button
+                              type="submit"
+                              onClick={() =>
+                                console.log(replacementImage, replacementId)
+                              }
+                              className="flex justify-center w-62.5 cursor-pointer bg-green-300 transition-all duration-300 p-1.5 rounded-[5px] space-x-2 items-center"
                             >
-                              <X
-                                onClick={() => removeImage(image)}
-                                className="cursor-pointer absolute backdrop-blur-xs rounded-full right-1 top-1"
-                                stroke="white"
-                                strokeWidth={1}
-                              />
-                            </section>
-                          ))}
+                              <Check size={16} strokeWidth={1.35} />
+                              <p>Confirm Edit</p>
+                              <Toaster />
+                            </button>
+                            {/* </DialogTrigger> */}
+                          </div>
+                        </form>
+                      </div>
+                      <div className="w-1/2">
+                        <div className="flex-col gap-3 items-center justify-center w-full flex">
+                          <p className="text-center">Uploaded Images</p>
+                          <div className="flex gap-4">
+                            <input
+                              onChange={getImage}
+                              type="file"
+                              hidden
+                              id="imageFile"
+                            />
+                            <label
+                              htmlFor="imageFile"
+                              className="cursor-pointer flex justify-center items-center w-50 h-37.5 rounded-[10px] bg-[#dcdcdc] "
+                            >
+                              <ImagePlus size={16} strokeWidth={1.25} />
+                            </label>
+                          </div>
+                          <div className="w-full flex gap-2">
+                            {formData.image
+                              ? formData.image.map((image, index) => (
+                                  <section
+                                    style={{
+                                      backgroundImage: `url(${image.secure_url})`,
+                                      backgroundPosition: "center",
+                                      backgroundSize: "cover",
+                                      backgroundRepeat: "no-repeat",
+                                    }}
+                                    key={index}
+                                    className="relative h-48 w-1/3"
+                                  >
+                                    <input
+                                      type="file"
+                                      hidden
+                                      id="relImage"
+                                      onChange={(e) =>
+                                        replaceImage(
+                                          image.secure_url,
+                                          e,
+                                          image.public_id
+                                        )
+                                      }
+                                    />
+                                    <label htmlFor="relImage">
+                                      <RefreshCw
+                                        className="cursor-pointer absolute backdrop-blur-xs rounded-full right-1 top-1"
+                                        stroke="white"
+                                        strokeWidth={1}
+                                      />
+                                    </label>
+                                  </section>
+                                ))
+                              : null}
+
+                            {replacementImage.length == 0
+                              ? null
+                              : replacementImage.map((image, index) => (
+                                  <section
+                                    style={{
+                                      backgroundImage: `url(${URL.createObjectURL(
+                                        image
+                                      )})`,
+                                      backgroundPosition: "center",
+                                      backgroundSize: "cover",
+                                      backgroundRepeat: "no-repeat",
+                                    }}
+                                    key={index}
+                                    className="relative h-48 w-1/3"
+                                  >
+                                    <X
+                                      onClick={() => removeImage(image)}
+                                      className="cursor-pointer absolute backdrop-blur-xs rounded-full right-1 top-1"
+                                      stroke="white"
+                                      strokeWidth={1}
+                                    />
+                                  </section>
+                                ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </DialogContent>
+                </Dialog>
               </div>
-            </DialogContent>
-          </Dialog>
-        </div>
-        <div>
-          {/* delete dialog */}
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <button
-                style={{
-                  cursor: disB ? "not-allowed" : "pointer",
-                }}
-                disabled={disB}
-                className="hover:bg-[#dcdcdc] px-2 py-1 rounded-[5px] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <Trash2
-                  style={{
-                    cursor: disB ? "not-allowed" : "pointer",
-                  }}
-                  size={20}
-                  strokeWidth={1.5}
-                />
-              </button>
-            </AlertDialogTrigger>
-            {/* <AlertDialogTrigger
+
+
+              <DropdownMenuItem>Preview</DropdownMenuItem>
+              <DropdownMenuSeparator />
+
+
+              <div>
+                {/* delete dialog */}
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      style={{
+                        cursor: disB ? "not-allowed" : "pointer",
+                      }}
+                      disabled={disB}
+                      className="hover:bg-[#dcdcdc] text-sm w-28 text-red-500 px-2 py-1 rounded-[5px] disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      Delete
+                    </button>
+                  </AlertDialogTrigger>
+                  {/* <AlertDialogTrigger
               disabled={disB}
               className="hover:bg-[#dcdcdc] px-2 py-1 rounded-[5px]"
             >
               <Trash2 className="cursor-pointer" size={20} strokeWidth={1.5} />
             </AlertDialogTrigger> */}
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle className="font-oswald">
-                  Are you absolutely sure?
-                </AlertDialogTitle>
-                <AlertDialogDescription className="font-montserrat">
-                  This action cannot be undone.{" "}
-                  <span className="font-oswald text-red-700">
-                    {props.pName}
-                  </span>{" "}
-                  will permanently be deleted and remove your data from our
-                  servers.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={() => del(props.pName, formData.image)}
-                >
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
-      </div>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className="font-oswald">
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="font-montserrat">
+                        This action cannot be undone.{" "}
+                        <span className="font-oswald text-red-700">
+                          {props.pName}
+                        </span>{" "}
+                        will permanently be deleted and remove your data from
+                        our servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => del(props.pName, formData.image)}
+                      >
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+
+
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </TableCell>
+      </TableRow>
 
       {/* edit dialog */}
     </>

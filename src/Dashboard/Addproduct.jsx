@@ -212,7 +212,7 @@ export const Addproduct = () => {
         </div>
         <div className="flex items-center gap-2">
           <Select onValueChange={sort}>
-            <SelectTrigger className="w-[100px] border-2 shadow-none focus:ring-0 px-2 rounded-full border-[#bdbdbd]">
+            <SelectTrigger className="w-25 border-2 shadow-none focus:ring-0 px-2 rounded-full border-[#bdbdbd]">
               <SelectValue placeholder="Sort By...." />
             </SelectTrigger>
             <SelectContent>
@@ -232,7 +232,7 @@ export const Addproduct = () => {
                 <p className="font-oswald">Add Product</p>
               </section>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[800px]">
+            <DialogContent className="sm:max-w-200">
               <DialogHeader>
                 <DialogTitle className="flex space-x-2 items-center">
                   <PackagePlus size={16} strokeWidth={1.25} />{" "}
@@ -314,7 +314,7 @@ export const Addproduct = () => {
                         type="submit"
                         disabled={uploading}
                         // onClick={notify}
-                        className="flex justify-center w-[250px] cursor-pointer bg-green-300 transition-all duration-300 p-1.5 rounded-[5px] space-x-2 items-center"
+                        className="flex justify-center w-62.5 cursor-pointer bg-green-300 transition-all duration-300 p-1.5 rounded-[5px] space-x-2 items-center"
                       >
                         {uploading ? (
                           <span className="flex items-center gap-2 justify-center">
@@ -351,23 +351,11 @@ export const Addproduct = () => {
                       />
                       <label
                         htmlFor="imageFile"
-                        className="cursor-pointer flex justify-center items-center w-[200px] h-[150px] rounded-[10px] bg-[#dcdcdc] "
+                        className="cursor-pointer flex justify-center items-center w-50 h-37.5 rounded-[10px] bg-[#dcdcdc] "
                       >
                         <ImagePlus size={16} strokeWidth={1.25} />
                       </label>
                     </div>
-                    {/* <div className="w-[80%] h-5 relative overflow-hidden bg-green-200 rounded-full">
-                    <span className="absolute flex justify-center -mt-1 w-full items-center">
-                      {uploadProgress.toFixed()}%
-                    </span>
-                    <div
-                      style={{
-                        width: `${uploadProgress}%`,
-                        transition: "width 0.2s ease",
-                      }}
-                      className="h-full bg-green-600"
-                    />
-                  </div> */}
                     <div className="w-full flex gap-2">
                       {formData.image
                         ? formData.image.map((image, index) => (
