@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import DashsideBar from "./DashsideBar";
 import { useState } from "react";
-import { MiniSidebar } from "./MiniSidebar";
 import { AppSidebar } from "../Components/app-sidebar";
 import { Sidebar } from "@/Components/ui/sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/Components/ui/sidebar";
