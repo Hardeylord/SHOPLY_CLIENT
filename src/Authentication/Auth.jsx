@@ -68,6 +68,7 @@ export const Auth = ({ children }) => {
 
       if (resp.ok) {
         const newToken = await resp.text();
+        console.log(newToken)
         const token = jwtDecode(newToken);
         setBearerToken(newToken);
         myCart()

@@ -1,11 +1,13 @@
 import {
   BadgeDollarSign,
   BadgeInfo,
+  BadgeQuestionMark,
   Box,
   ChartLine,
   CircleFadingArrowUp,
   InboxIcon,
   MessagesSquare,
+  SquareKanban,
 } from "lucide-react";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
@@ -55,7 +57,7 @@ export const AccountBar = () => {
         <p>Need Assitance?</p>
         <div className="ml-3.5 space-y-2 text-black font-oswald">
           <section className="flex cursor-pointer hover:bg-green-300 transition-all duration-300 p-1.5 rounded-[5px] space-x-2 items-center">
-            <BadgeInfo size={16} strokeWidth={1.25} />
+            <SquareKanban size={16} strokeWidth={1.25} />
             <p>Help & support</p>
           </section>
           <section className="flex cursor-pointer hover:bg-green-300 transition-all duration-300 p-1.5 rounded-[5px] space-x-2 items-center">

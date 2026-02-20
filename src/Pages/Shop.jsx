@@ -48,7 +48,7 @@ function Shop() {
           </div>
         ) : (
           // products
-          <div className="w-full h-fit px-10 py-4 space-y-2.5">
+          <div className="w-full h-fit px-10 py-16 space-y-2.5">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 gap-y-9">
               {products.map((product, index) => (
                 <ProductCard

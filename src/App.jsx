@@ -15,6 +15,9 @@ import { Account } from "./Pages/Accounts/Account";
 import { AccountLayout } from "./Mainlayout/AccountLayout";
 import { UpgradeAccount } from "./Pages/Accounts/UpgradeAccount";
 import { Sales } from "./Dashboard/Sales";
+import Checkout from "./Pages/Checkout";
+import { Orders } from "./Pages/Accounts/Orders";
+import SuccessUrl from "./Pages/SuccessUrl";
 
 function App() {
   const { LogOut, user, loading, roles, userRole, isLoading } = useContext(userContext);
@@ -26,6 +29,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="shop" element={<Shop />} />
             <Route path="shop/:name" element={<Productdesc />} />
+            <Route path="success" element={<SuccessUrl/>} />
 
             <Route
               path="/user"
@@ -41,6 +45,8 @@ function App() {
             >
               <Route path="account" element={<Account />} />
               <Route path="accountupgrade" element={<UpgradeAccount />} />
+              <Route path="checkout" element={<Checkout/>} />
+              <Route path="orders" element={<Orders/>} />
             </Route>
           </Route>
 

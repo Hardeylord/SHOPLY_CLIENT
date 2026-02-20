@@ -26,7 +26,7 @@ import {
   MenubarTrigger,
 } from "@/Components/ui/menubar";
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../Authentication/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import { ShopSearch } from "../Components/ShopSearch";
@@ -34,15 +34,14 @@ import { PopoverClose } from "@radix-ui/react-popover";
 function Header() {
   const {
     user,
-    userInfo,
-    setCartItems,
     myCart,
     cartItems,
     bearerToken,
     userName,
-    theme,
     setTheme,
   } = useContext(userContext);
+
+  const navigate = useNavigate()
 
   let totalPrice = 0;
   if (cartItems.length > 0) {
@@ -107,6 +106,10 @@ function Header() {
       name: "Sport",
     },
   ];
+
+  function NavigateToCheckoutPage(params) {
+    navigate("/user/Checkout")
+  }
 
   return (
     <>
@@ -232,6 +235,7 @@ function Header() {
                   opacity: cartItems.length === 0 ? 0.6 : 1,
                 }}
                 disabled={cartItems.length === 0}
+                onClick={()=>NavigateToCheckoutPage()}
                 className="flex items-center justify-center md:w-[70%] gap-2 text-[rgb(174,157,108)] light bg-[rgb(var(--btnColor))] rounded-[5px] p-1.5 px-4 cursor-pointer"
                 type="submit"
               >

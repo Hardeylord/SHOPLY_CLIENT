@@ -79,7 +79,7 @@ function ProductCard(props) {
       <Toaster />
       <div className="flex relative">
         {/* icons */}
-        <div className="absolute rounded-3xl inset-0 bg-black/0 hover:bg-black/50  transition-colors duration-200 flex items-center justify-center">
+        <div className="absolute rounded-3xl inset-0 bg-black/35 md:bg-black/0 hover:bg-black/50  transition-colors duration-200 flex items-center justify-center">
           <div className="flex flex-col space-y-2 absolute top-5 left-2">
             <div className="flex space-x-2">
               {/* cart */}

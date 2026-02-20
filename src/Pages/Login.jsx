@@ -71,7 +71,7 @@ export const Login = () => {
       // console.log(response)
       if (response.ok) {
         const accessToken = await response.text();
-        // console.log(accessToken)
+        console.log(accessToken)
         const token = jwtDecode(accessToken);
         setBearerToken(accessToken);
         setUser(true);
