@@ -10,7 +10,7 @@ export const Airpodmax = ({themes}) => {
     const latestProducts = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("http://localhost:8080/latestproducts");
+        const response = await fetch("https://endearing-creation-production-d435.up.railway.app/latestproducts");
         if (response.ok) {
           const latestProducts = await response.json();
           setNewDrops(latestProducts);
