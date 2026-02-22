@@ -30,12 +30,12 @@ export const ShopSearch = () => {
       setIsSearching(true);
       try {
         const response = await fetch(
-          `http://localhost:8080/search/${searchDebounced}`,
+          `https://endearing-creation-production-d435.up.railway.app/search/${searchDebounced}`,
           {
             method: "GET",
           }
         );
-        
+
         if (!response.ok) {
           // console.log(`HTTP error: ${response.status}`);
           throw new Error(`HTTP error: ${response.status}`);
@@ -82,7 +82,7 @@ export const ShopSearch = () => {
             //     : "180px" // desktop
             //   : "0px",
             // padding: searchBtn ? "0.5rem" : "0px",
-            width: searchBtn ? "180px" : "0px"
+            width: searchBtn ? "180px" : "0px",
           }}
           type="text"
           onChange={(e) => setSearchInputs(e.target.value)}

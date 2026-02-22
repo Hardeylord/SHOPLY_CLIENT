@@ -8,8 +8,8 @@ function Shop() {
   const [products, setProducts] = useState([]);
   const [fetching, setFetching] = useState(false);
 
-  const[isLast, setIsLast]=useState(false);
-  const[isFirst, setisFirst]=useState(true);
+  const [isLast, setIsLast] = useState(false);
+  const [isFirst, setisFirst] = useState(true);
   const [page, setPage] = useState(1);
   const next = () => {
     setPage((prv) => prv + 1);
@@ -24,12 +24,14 @@ function Shop() {
       try {
         setFetching(true);
 
-        const product = await fetch(`http://localhost:8080/?pageNo=${page}`);
+        const product = await fetch(
+          `https://endearing-creation-production-d435.up.railway.app/products/productList?pageNo=${page}`
+        );
         const gottenProduct = await product.json();
 
         setProducts(gottenProduct.content);
-        setIsLast(gottenProduct.last)
-        setisFirst(gottenProduct.first)
+        setIsLast(gottenProduct.last);
+        setisFirst(gottenProduct.first);
         setFetching(false);
         // console.log(gottenProduct);
       } catch (error) {}
@@ -44,7 +46,7 @@ function Shop() {
         {fetching ? (
           // loader
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 gap-y-9 px-10 py-4">
-          <SkeletonLoad cols={6} />
+            <SkeletonLoad cols={6} />
           </div>
         ) : (
           // products

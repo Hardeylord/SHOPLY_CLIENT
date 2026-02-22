@@ -10,7 +10,7 @@ function ProductCard(props) {
   const [cart, setCart] = useState(false);
   const [wishlist, setWishlist] = useState(false);
 
-  const { cartItems, myCart, setCartItems, bearerToken } =
+  const { theme, myCart, setCartItems, bearerToken } =
     useContext(userContext);
 
   // function addToCart(cartItem) {
@@ -136,9 +136,9 @@ function ProductCard(props) {
         />
       </div>
       <Link to={`/shop/${props.pName}`}>
-        <div className="text-black space-y-1.5">
+        <div className={`${theme === "dark2" ? "dark2" : "light"} text-[rgb(var(--btnColor))] space-y-1.5`}>
           <p className="font-medium text-2xl font-oswald">{props.pName}</p>
-          <p className="text-xs text-[#4f4f4f] font-montserrat font-medium">
+          <p className="text-xs  font-montserrat font-medium">
             {props.pDesc.length >= 90
               ? props.pDesc.substring(0, 70)
               : props.pDesc}
