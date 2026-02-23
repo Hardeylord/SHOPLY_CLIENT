@@ -23,7 +23,7 @@ export const Auth = ({ children }) => {
 
   const LogOutUser2 = async () => {
     console.log("clicked...");
-    await fetch("http://localhost:8080/auth/logout", {
+    await fetch("https://endearing-creation-production-d435.up.railway.app/auth/logout", {
       method: "POST",
       credentials: "include",
     });
@@ -37,7 +37,7 @@ export const Auth = ({ children }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/cartItems", {
+      const response = await fetch("https://endearing-creation-production-d435.up.railway.app/cartItems", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${bearerToken}`,
@@ -59,7 +59,7 @@ export const Auth = ({ children }) => {
 
   const fetchRefreshToken = async () => {
     try {
-      const resp = await fetch("http://localhost:8080/refreshToken", {
+      const resp = await fetch("https://endearing-creation-production-d435.up.railway.app/refreshToken", {
         method: "POST",
         credentials: "include",
       });
