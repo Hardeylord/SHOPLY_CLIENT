@@ -17,6 +17,32 @@ const Productdesc = () => {
     image: [],
   });
 
+  const shippingInfo = [
+    {
+      icon: CirclePercent,
+      mainText: "Discount",
+      subText: "Disc 50%",
+    },
+    {
+      icon: Package,
+      mainText: "Package",
+      subText: "Regular Package",
+    }
+  ];
+
+  const shippingInfo2 = [
+    {
+      icon: CalendarDays,
+      mainText: "Delivery Time",
+      subText: "3-4 Working Days",
+    },
+    {
+      icon: TruckElectric,
+      mainText: "Estimation Arrive",
+      subText: "5 Days",
+    },
+  ];
+
   useEffect(() => {
     const productDesc = async () => {
       try {
@@ -64,8 +90,10 @@ const Productdesc = () => {
             <button className="px-4 border border-[#dcdcdc] rounded-full py-1.5">
               Man Fashion
             </button>
+            <div className="flex flex-col px-4">
             <p className="font-oswald text-2xl">{fullProduct.name}</p>
-            <p className="font-oswald text-xl">${fullProduct.price}</p>
+            <p className="font-oswald text-2xl font-medium">${fullProduct.price}</p>
+            </div>
           </div>
           <div>
             <section className="px-4 py-2 rounded-2xl border border-[#dcdcdc]">
@@ -78,53 +106,36 @@ const Productdesc = () => {
               <p className="font-oswald text-2xl">Shipping</p>
               <div className="w-full space-y-4 flex">
                 {/* discount */}
-                <div className="w-1/2 space-y-4">
-                  <div className="w-1/2 flex space-x-2">
-                    <div className="bg-[#dcdcdc] flex items-center rounded-full p-2">
-                      <CirclePercent size={20} strokeWidth={1.5} />
+                <div className="w-full md:w-1/2 space-y-4">
+                  {shippingInfo.map((info, index) => (
+                    <div key={index} className="md:w-1/2 flex space-x-2">
+                      <div className="bg-[#dcdcdc] flex justify-center items-center rounded-full p-2">
+                        <info.icon size={20} strokeWidth={1.5} />
+                      </div>
+                      <div>
+                        <p className="text-xs">{info.mainText}</p>
+                        <p className="font-oswald text-[15px]">
+                          {info.subText}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-xs">Discount</p>
-                      <p className="font-oswald text-[15px]">Disc 50%</p>
-                    </div>
-                  </div>
-
-                  {/* discount */}
-                  <div className="w-1/2 flex space-x-2">
-                    <div className="bg-[#dcdcdc] flex items-center rounded-full p-2">
-                      <Package size={20} strokeWidth={1.5} />
-                    </div>
-                    <div>
-                      <p className="text-xs">Package</p>
-                      <p className="font-oswald text-[15px]">Regular Package</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
 
-                <div className="w-1/2 space-y-4">
-                  {/* discount */}
-                  <div className="w-1/2 flex space-x-2">
-                    <div className="bg-[#dcdcdc] flex items-center rounded-full p-2">
-                      <CalendarDays size={20} strokeWidth={1.5} />
+                <div className="w-full md:w-1/2 space-y-4">
+                  {shippingInfo2.map((info, index) => (
+                    <div key={index} className="md:w-1/2 flex space-x-2">
+                      <div className="bg-[#dcdcdc] flex justify-center items-center rounded-full p-2">
+                        <info.icon size={20} strokeWidth={1.5} />
+                      </div>
+                      <div>
+                        <p className="text-xs">{info.mainText}</p>
+                        <p className="font-oswald text-[15px]">
+                          {info.subText}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-xs">Delivery Time</p>
-                      <p className="font-oswald text-[15px]">
-                        3-4 Working Days
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* discount */}
-                  <div className="w-1/2 flex space-x-2">
-                    <div className="bg-[#dcdcdc] flex items-center rounded-full p-2">
-                      <TruckElectric size={20} strokeWidth={1.5} />
-                    </div>
-                    <div>
-                      <p className="text-xs">Estimation Arrive</p>
-                      <p className="font-oswald text-[15px]">5 Days</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </section>
