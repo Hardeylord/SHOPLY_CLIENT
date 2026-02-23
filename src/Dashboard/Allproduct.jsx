@@ -44,7 +44,7 @@ export const Allproduct = ({ sort, pSearchInputs }) => {
         setError(false);
 
         const product = await fetch(
-          `http://localhost:8080/allproducts?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sort}`,
+          `https://endearing-creation-production-d435.up.railway.app/allproducts?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sort}`,
           {
             method: "GET",
             credentials: "include",

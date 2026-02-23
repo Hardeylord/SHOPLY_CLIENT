@@ -141,7 +141,7 @@ export const Addproduct = () => {
 
     try {
       setUploding(true);
-      const res = await fetch("http://localhost:8080/addproduct", {
+      const res = await fetch("https://endearing-creation-production-d435.up.railway.app/addproduct", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${bearerToken}`,

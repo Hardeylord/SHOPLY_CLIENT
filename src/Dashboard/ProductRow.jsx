@@ -96,7 +96,7 @@ export const ProductRow = (props) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/product/update/${id}`,
+        `https://endearing-creation-production-d435.up.railway.app/product/update/${id}`,
         {
           method: "PUT",
           credentials: "include",
@@ -170,7 +170,7 @@ export const ProductRow = (props) => {
     const ids = public_id.map((id) => console.log(id.public_id));
     // console.log(public_id)
     try {
-      const response = await fetch(`http://localhost:8080/delete/${name}`, {
+      const response = await fetch(`https://endearing-creation-production-d435.up.railway.app/delete/${name}`, {
         method: "DELETE",
         credentials: "include",
         headers: {
