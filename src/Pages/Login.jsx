@@ -59,7 +59,7 @@ export const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/login", {
+      const response = await fetch("https://endearing-creation-production-d435.up.railway.app/login", {
         method: "POST",
         credentials: "include",
         headers: {

@@ -20,7 +20,9 @@ const Productdesc = () => {
   useEffect(() => {
     const productDesc = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/product/${name}`);
+        const response = await fetch(
+          `https://endearing-creation-production-d435.up.railway.app/product/${name}`
+        );
         const data = await response.json();
         setfullProduct(data);
       } catch (error) {}

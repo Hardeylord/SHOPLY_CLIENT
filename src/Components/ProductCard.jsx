@@ -10,8 +10,7 @@ function ProductCard(props) {
   const [cart, setCart] = useState(false);
   const [wishlist, setWishlist] = useState(false);
 
-  const { theme, myCart, setCartItems, bearerToken } =
-    useContext(userContext);
+  const { theme, myCart, setCartItems, bearerToken } = useContext(userContext);
 
   // function addToCart(cartItem) {
   //   // console.log(typeof(cartItems))
@@ -30,14 +29,17 @@ function ProductCard(props) {
 
   async function addToCart2() {
     try {
-      const response = await fetch("http://localhost:8080/addToCart", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${bearerToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(props.pId),
-      });
+      const response = await fetch(
+        "https://endearing-creation-production-d435.up.railway.app/addToCart",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${bearerToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(props.pId),
+        }
+      );
 
       if (response.ok) {
         toast.success("Product Added To Cart");
@@ -121,8 +123,7 @@ function ProductCard(props) {
               </div>
             </div>
             {/* negotiate */}
-            {props.pNegotiable ? (<Chat_Io/>) : (null)}
-            
+            {props.pNegotiable ? <Chat_Io /> : null}
           </div>
         </div>
         <img
@@ -136,7 +137,11 @@ function ProductCard(props) {
         />
       </div>
       <Link to={`/shop/${props.pName}`}>
-        <div className={`${theme === "dark2" ? "dark2" : "light"} text-[rgb(var(--btnColor))] space-y-1.5`}>
+        <div
+          className={`${
+            theme === "dark2" ? "dark2" : "light"
+          } text-[rgb(var(--btnColor))] space-y-1.5`}
+        >
           <p className="font-medium text-2xl font-oswald">{props.pName}</p>
           <p className="text-xs  font-montserrat font-medium">
             {props.pDesc.length >= 90

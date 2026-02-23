@@ -59,7 +59,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/signup", {
+      const response = await fetch("https://endearing-creation-production-d435.up.railway.app/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
