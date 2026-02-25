@@ -1,10 +1,8 @@
-import React, { createContext, useEffect, useState } from "react";
-import Cookies from "universal-cookie";
+import React, { useEffect, useState } from "react";
 import { userContext } from "./AuthContext";
 import { jwtDecode } from "jwt-decode";
 
 export const Auth = ({ children }) => {
-  const jwtCookie = new Cookies();
 
   const [user, setUser] = useState(false);
   const [loading, isLoading] = useState(true);
@@ -22,7 +20,6 @@ export const Auth = ({ children }) => {
   };
 
   const LogOutUser2 = async () => {
-    console.log("clicked...");
     await fetch(
       "https://endearing-creation-production-d435.up.railway.app/auth/logout",
       {
@@ -77,7 +74,7 @@ export const Auth = ({ children }) => {
 
       if (resp.ok) {
         const newToken = await resp.text();
-        console.log(newToken);
+        // console.log(newToken);
         const token = jwtDecode(newToken);
         setBearerToken(newToken);
         myCart();
