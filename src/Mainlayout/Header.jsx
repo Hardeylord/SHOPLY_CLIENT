@@ -32,16 +32,10 @@ import toast, { Toaster } from "react-hot-toast";
 import { ShopSearch } from "../Components/ShopSearch";
 import { PopoverClose } from "@radix-ui/react-popover";
 function Header() {
-  const {
-    user,
-    myCart,
-    cartItems,
-    bearerToken,
-    userName,
-    setTheme,
-  } = useContext(userContext);
+  const { user, myCart, cartItems, bearerToken, userName, setTheme } =
+    useContext(userContext);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   let totalPrice = 0;
   if (cartItems.length > 0) {
@@ -51,13 +45,16 @@ function Header() {
 
   async function removeItem(id) {
     try {
-      const response = await fetch(`http://localhost:8080/remove${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${bearerToken}`,
-        },
-        body: JSON.stringify(id),
-      });
+      const response = await fetch(
+        `https://endearing-creation-production-d435.up.railway.app/remove${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${bearerToken}`,
+          },
+          body: JSON.stringify(id),
+        }
+      );
 
       if (response.ok) {
         myCart();
@@ -108,7 +105,7 @@ function Header() {
   ];
 
   function NavigateToCheckoutPage(params) {
-    navigate("/user/Checkout")
+    navigate("/user/Checkout");
   }
 
   return (
@@ -235,7 +232,7 @@ function Header() {
                   opacity: cartItems.length === 0 ? 0.6 : 1,
                 }}
                 disabled={cartItems.length === 0}
-                onClick={()=>NavigateToCheckoutPage()}
+                onClick={() => NavigateToCheckoutPage()}
                 className="flex items-center justify-center md:w-[70%] gap-2 text-[rgb(174,157,108)] light bg-[rgb(var(--btnColor))] rounded-[5px] p-1.5 px-4 cursor-pointer"
                 type="submit"
               >

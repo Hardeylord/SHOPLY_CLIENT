@@ -23,10 +23,13 @@ export const Auth = ({ children }) => {
 
   const LogOutUser2 = async () => {
     console.log("clicked...");
-    await fetch("https://endearing-creation-production-d435.up.railway.app/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
+    await fetch(
+      "https://endearing-creation-production-d435.up.railway.app/auth/logout",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
 
     window.location.reload();
   };
@@ -37,12 +40,15 @@ export const Auth = ({ children }) => {
     }
 
     try {
-      const response = await fetch("https://endearing-creation-production-d435.up.railway.app/cartItems", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${bearerToken}`,
-        },
-      });
+      const response = await fetch(
+        "https://endearing-creation-production-d435.up.railway.app/cartItems",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${bearerToken}`,
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -59,19 +65,22 @@ export const Auth = ({ children }) => {
 
   const fetchRefreshToken = async () => {
     try {
-      const resp = await fetch("https://endearing-creation-production-d435.up.railway.app/refreshToken", {
-        method: "POST",
-        credentials: "include",
-      });
+      const resp = await fetch(
+        "https://endearing-creation-production-d435.up.railway.app/refreshToken",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
 
       // console.log(resp);
 
       if (resp.ok) {
         const newToken = await resp.text();
-        console.log(newToken)
+        console.log(newToken);
         const token = jwtDecode(newToken);
         setBearerToken(newToken);
-        myCart()
+        myCart();
         // jwtCookie.set("jwt", newToken);
         setUser(true);
         setUserRole(token.role);
@@ -121,7 +130,7 @@ export const Auth = ({ children }) => {
           const decoded = jwtDecode(bearerToken);
           if (!isMounted) return;
 
-          myCart()
+          myCart();
           setUser(true);
           setUserInfo(decoded);
           setUserRole(decoded.role);
