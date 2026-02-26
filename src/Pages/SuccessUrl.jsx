@@ -1,6 +1,11 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const SuccessUrl = () => {
+  const navigate=useNavigate()
+
+  function returnHome() {
+    navigate("/user/orders")
+  }
   return (
     <div className="py-16 w-full h-screen flex flex-col justify-center items-center">
       <img src="/payment.webp" className="size-96 mt-10" alt="" />
@@ -9,7 +14,7 @@ const SuccessUrl = () => {
         <p className="font-montserrat">
           we'll notify you once payment has been confirmed
         </p>
-        <button className="bg-[rgb(33,100,89)] rounded-xs cursor-pointer text-white text-center p-2 px-5">
+        <button onClick={returnHome} className="bg-[rgb(33,100,89)] rounded-xs cursor-pointer text-white text-center p-2 px-5">
           Continue Shopping
         </button>
       </div>

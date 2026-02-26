@@ -1,25 +1,57 @@
 import { useContext, useState } from "react";
 import { userContext } from "../Authentication/AuthContext";
-import { X } from "lucide-react";
+import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 export default function Checkout() {
-  const { user, myCart, cartItems, bearerToken, userName, setTheme } =
-    useContext(userContext);
+
+  const navigate=useNavigate()
+  const idempotencyKey = uuidv4();
+
+  const [checkout_details, setCheckout_details] = useState({
+    firstName: "",
+    lastName: "",
+    phonenumber: "",
+    deliveryAddress: "",
+  });
+
+  function getVal(e) {
+    const { name, value } = e.target;
+    setCheckout_details({ ...checkout_details, [name]: value });
+  }
+
+  const { cartItems, bearerToken } = useContext(userContext);
   let totalPrice = 0;
   if (cartItems.length > 0) {
     const prices = cartItems.map((prod) => prod.price);
     totalPrice = prices.reduce((acum, iV) => acum + iV, 0);
   }
 
-  async function makePayment() {
+  async function makePayment(e) {
+    // e.preventDefault()
+    // console.log({ checkout_details });
     try {
-      await fetch("http://localhost:8080/checkout/validateCart", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${bearerToken}`,
-        },
-      });
-    } catch (error) {}
+     const resp = await fetch("https://endearing-creation-production-d435.up.railway.app/checkout/validateCart",{
+          method: "POST",
+          headers: {
+            "Idempotency-Key": idempotencyKey,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${bearerToken}`,
+          },
+          body: JSON.stringify(checkout_details),
+        }
+      );
+
+      if (resp.ok) {
+        const checkout_response = await resp.json()
+        window.location.href = checkout_response.sessionUrl;
+      } 
+      toast.error("Error .... Try again")
+    } catch (error) {
+      console.log(error)
+    }
   }
+
   return (
     <>
       <div className="w-full">
@@ -27,7 +59,11 @@ export default function Checkout() {
         <div className="w-full gap-2 flex flex-col md:flex-row">
           {/* billing forms */}
           <div className="w-full md:w-2/3 py-4">
-            <form className="w-full  font-oswald space-y-5" action="">
+            <form
+              // onSubmit={makePayment}
+              className="w-full  font-oswald space-y-5"
+              action=""
+            >
               <p className="font-light">Personal Information</p>
 
               <div className="flex w-full gap-4">
@@ -37,7 +73,8 @@ export default function Checkout() {
                   </label>
                   <input
                     id="firstname"
-                    name="firstname"
+                    onChange={(e) => getVal(e)}
+                    name="firstName"
                     placeholder="john"
                     className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm transition duration-150"
                     type="text"
@@ -50,7 +87,8 @@ export default function Checkout() {
                   </label>
                   <input
                     id="lastname"
-                    name="lastname"
+                    onChange={(e) => getVal(e)}
+                    name="lastName"
                     placeholder="doe"
                     className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm transition duration-150"
                     type="text"
@@ -78,6 +116,7 @@ export default function Checkout() {
                   </label>
                   <input
                     id="phonenumber"
+                    onChange={(e) => getVal(e)}
                     name="phonenumber"
                     placeholder="090 3172 5065"
                     className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm transition duration-150"
@@ -89,29 +128,31 @@ export default function Checkout() {
               <div className="flex w-full gap-4">
                 <div className="w-full flex flex-col gap-y-1.5">
                   <label className="ml-2.5" htmlFor="City">
-                    City
+                    Delivery Address
                   </label>
                   <input
-                    id="City"
-                    name="City"
+                    id="deliveryAddress"
+                    onChange={(e) => getVal(e)}
+                    name="deliveryAddress"
                     placeholder="ibadan"
                     className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm transition duration-150"
                     type="text"
                   />
                 </div>
 
-                <div className="w-full flex flex-col gap-y-1.5">
+                {/* <div className="w-full flex flex-col gap-y-1.5">
                   <label className="ml-2.5" htmlFor="State">
                     State
                   </label>
                   <input
                     id="State"
+                    onChange={(e)=>getVal(e)}
                     name="State"
                     placeholder="oyo"
                     className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm transition duration-150"
                     type="text"
                   />
-                </div>
+                </div> */}
 
                 <div className="w-full flex flex-col gap-y-1.5">
                   <label className="ml-2.5" htmlFor="Zipcode">
@@ -185,12 +226,13 @@ export default function Checkout() {
               </div>
             </div>
 
-            <section
+            <button
+              type="submit"
               onClick={() => makePayment()}
               className="bg-[rgb(33,100,89)] rounded-xs cursor-pointer text-white text-center p-2 px-5"
             >
               Continue to Payment
-            </section>
+            </button>
           </div>
         </div>
       </div>

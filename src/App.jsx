@@ -20,7 +20,7 @@ import { Orders } from "./Pages/Accounts/Orders";
 import SuccessUrl from "./Pages/SuccessUrl";
 
 function App() {
-  const { LogOut, user, loading, roles, userRole, isLoading } = useContext(userContext);
+  const { user, loading, roles, userRole } = useContext(userContext);
   return (
     <>
       <BrowserRouter>
