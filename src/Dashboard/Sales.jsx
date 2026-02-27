@@ -21,7 +21,7 @@ export const Sales = () => {
     async function getAllOrders(params) {
       try {
         const orderResponse = await fetch(
-          "http://localhost:8080/orders/allOrders",
+          "https://endearing-creation-production-d435.up.railway.app/orders/allOrders",
           {
             method: "GET",
             credentials: "include",
