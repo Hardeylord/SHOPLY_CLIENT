@@ -18,7 +18,7 @@ export const Sales = () => {
   const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
-    async function getAllOrders(params) {
+    async function getAllOrders() {
       try {
         const orderResponse = await fetch(
           "https://endearing-creation-production-d435.up.railway.app/orders/allOrders",
