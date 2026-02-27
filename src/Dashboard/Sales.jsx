@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Table,
   TableBody,
@@ -9,67 +9,55 @@ import {
   TableCaption,
   TableFooter,
 } from "@/Components/ui/table";
-import { Badge } from "@/Components/ui/badge"
-import { Mail, MapPin, Phone, User, BadgeCheck } from "lucide-react";
+import { Badge } from "@/Components/ui/badge";
+import { Mail, MapPin, Phone, User, BadgeCheck, Settings, Truck, Container, CircleCheck } from "lucide-react";
+import { userContext } from "../Authentication/AuthContext";
+
 export const Sales = () => {
-  const invoices = [
+  const { bearerToken } = useContext(userContext);
+  const [orderList, setOrderList] = useState([]);
+
+  useEffect(() => {
+    async function getAllOrders(params) {
+      try {
+        const orderResponse = await fetch(
+          "http://localhost:8080/orders/allOrders",
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              Authorization: `Bearer ${bearerToken}`,
+            },
+          }
+        );
+        if (orderResponse.ok) {
+          const orderData = await orderResponse.json();
+          console.log(orderData);
+          setOrderList(orderData);
+        }
+      } catch (error) {}
+    }
+
+    getAllOrders();
+  }, []);
+
+  const orderStatusBadge = [
     {
-      customer: "dipo",
-      orderStatus: "Processing",
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      items: "2",
+      ordStat:"PROCESSING",
+      color:"#C29E4A",
+      icon:Settings
     },
     {
-      customer: "dunsi",
-      orderStatus: "Processing",
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      items: "3",
+      ordStat:"SHIPPED",
+      color:"",
+      icon:Container
     },
     {
-      customer: "ayo",
-      orderStatus: "Shipped",
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      items: "4",
+      ordStat:"DELIVERED",
+      color:"green-50",
+      icon:Truck
     },
-    {
-      customer: "ife",
-      orderStatus: "Delivered",
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      items: "5",
-    },
-    {
-      customer: "mummy",
-      orderStatus: "Processing",
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      items: "6",
-    },
-    {
-      customer: "daddy",
-      orderStatus: "Delivered",
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      items: "3",
-    },
-    {
-      customer: "volume",
-      orderStatus: "Shipped",
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      items: "2",
-    },
-  ];
+  ]
 
   const [isActive, setIsActive] = useState(null);
   function activeClick(invoice) {
@@ -77,128 +65,144 @@ export const Sales = () => {
   }
   return (
     <>
-      <div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Order Id</TableHead>
-              <TableHead>Customer</TableHead>
-              <TableHead>Items</TableHead>
-              <TableHead>Total</TableHead>
-              <TableHead>Pyament Status</TableHead>
-              <TableHead>Order Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {invoices.map((invoice) => (
-              <React.Fragment key={invoice.invoice}>
-                <TableRow
-                  onClick={() => activeClick(invoice.invoice)}
-                  className={`${
-                    isActive === invoice.invoice ? "bg-[#e6e6e6]" : ""
-                  } cursor-pointer`}
-                >
-                  <TableCell className="font-medium">
-                    {invoice.invoice}
-                  </TableCell>
-                  <TableCell>{invoice.customer}</TableCell>
-                  <TableCell>{invoice.items}</TableCell>
-                  <TableCell className="">{invoice.totalAmount}</TableCell>
-                  <TableCell>{invoice.paymentStatus}</TableCell>
-                  <TableCell>{invoice.orderStatus}</TableCell>
-                </TableRow>
+      {orderList.length > 0 ? (
+        <div>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Order Id</TableHead>
+                <TableHead>Customer</TableHead>
+                <TableHead>Items</TableHead>
+                <TableHead>Total($)</TableHead>
+                <TableHead>Pyament Status</TableHead>
+                <TableHead>Order Status</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {orderList.map((order) => (
+                <React.Fragment key={order.id}>
+                  <TableRow
+                    onClick={() => activeClick(order.id)}
+                    className={`${
+                      isActive === order.id ? "bg-[#e6e6e6]" : ""
+                    } cursor-pointer`}
+                  >
+                    <TableCell className="font-medium">{order.id}</TableCell>
+                    <TableCell>{order.firstName}</TableCell>
+                    <TableCell>{order.items.length}</TableCell>
+                    <TableCell className="">${order.price}</TableCell>
+                    <TableCell>
+                      <Badge className="bg-green-500">
+                        <CircleCheck data-icon="inline-start" />
+                        {order.paymentStatus}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge className="bg-[#C29E4A]">
+                        <Settings data-icon="inline-start" />
+                        {order.orderStatus}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                    </TableCell>
+                  </TableRow>
 
-                {/* PREVIEW ROW */}
-                {isActive === invoice.invoice && (
-                  <TableRow className="border p-4">
-                    <TableCell colSpan={5} className="p-4">
-                      <Table>
-                        <TableCaption>Order Preview.</TableCaption>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead className="w-25">Product</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead className="text-right">Amount</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {invoices.map((invoice) => (
-                            <TableRow key={invoice.invoice}>
-                              <TableCell className="font-medium">
-                                {invoice.invoice}
-                              </TableCell>
-                              <TableCell>{invoice.paymentStatus}</TableCell>
-                              <TableCell className="text-right">
-                                {invoice.totalAmount}
+                  {/* PREVIEW ROW */}
+                  {isActive === order.id && (
+                    <TableRow className="border p-4">
+                      <TableCell colSpan={5} className="p-4">
+                        <Table>
+                          <TableCaption>Order Preview.</TableCaption>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="w-25">Product Id</TableHead>
+                              <TableHead className="w-25"></TableHead>
+                              <TableHead className="w-25">Product Name</TableHead>
+                              <TableHead className="text-right">Amount ($)</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {order.items.map((products) => (
+                              <TableRow key={products.productId}>
+                                <TableCell className="font-medium">{products.productId}</TableCell>
+                                <TableCell className="font-medium">
+                                <div style={{backgroundImage: `url(${products.imageUrl[0].secure_url})`,}}
+                        className="size-12 bg-cover bg-center rounded-[5px]"></div>
+                                </TableCell>
+                                <TableCell>{products.productName}</TableCell>
+                                <TableCell className="text-right">{products.price}</TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                          <TableFooter>
+                            <TableRow>
+                              <TableCell colSpan={3}>Total</TableCell>
+                              <TableCell className="text-left">
+                                ${order.price}
                               </TableCell>
                             </TableRow>
-                          ))}
-                        </TableBody>
-                        <TableFooter>
-                          <TableRow>
-                            <TableCell colSpan={3}>Total</TableCell>
-                            <TableCell className="text-left">
-                              $2,500.00
-                            </TableCell>
-                          </TableRow>
-                        </TableFooter>
-                      </Table>
+                          </TableFooter>
+                        </Table>
+                      </TableCell>
+                    </TableRow>
+                  )}
+
+                  {/* PREVIEW ROW */}
+                  {isActive === order.id && (
+                  <TableRow className="bg-muted/50">
+                    <TableCell colSpan={7} className="p-4">
+                      <OrderPreview order={order} />
                     </TableCell>
                   </TableRow>
                 )}
 
-                {/* PREVIEW ROW */}
-                {isActive === invoice.invoice && (
-                  <TableRow className="bg-muted/50">
-                    <TableCell colSpan={7} className="p-4">
-                      <InvoicePreview invoice={invoice} />
-                    </TableCell>
-                  </TableRow>
-                )}
-              </React.Fragment>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <div>nothing to see here</div>
+      )}
     </>
   );
 };
 
-function InvoicePreview({ invoice }) {
+function OrderPreview({ order }) {
   return (
     <div className="border rounded-xl p-4 space-y-4">
       <div className="flex flex-wrap gap-2">
-        <p className="font-oswald text-2xl">#06060fgdb2828</p>
-        <Badge variant="destructive">
-        <BadgeCheck data-icon="inline-start" />
-        Processing
-      </Badge>
+        <p className="font-oswald text-2xl">#{order.id}</p>
+        <Badge className="bg-[#C29E4A]">
+          <Settings data-icon="inline-start" />
+          {order.orderStatus}
+        </Badge>
       </div>
       <div className="flex gap-4">
         <section className="flex justify-center items-center gap-2">
-        <User className="size-4" strokeWidth={1.25}/>
-        Adeagbo Adedipupo
+          <User className="size-4" strokeWidth={1.25} />
+          {order.firstName} - {order.lastName}
         </section>
         <section className="flex justify-center items-center gap-2">
-        <MapPin className="size-4" strokeWidth={1.25}/>
-        New Cele house 18
+          <MapPin className="size-4" strokeWidth={1.25} />
+          {order.deliveryAddress}
         </section>
         <section className="flex justify-center items-center gap-2">
-        <Mail className="size-4" strokeWidth={1.25}/>
-        ade@gmail.com
+          <Mail className="size-4" strokeWidth={1.25} />
+          {order.email}
         </section>
         <section className="flex justify-center items-center gap-2">
-        <Phone className="size-4" strokeWidth={1.25}/>
-        09031725065
+          <Phone className="size-4" strokeWidth={1.25} />
+          {order.phonenumber}
         </section>
       </div>
       <div className="flex flex-wrap gap-2">
         <p className="">Payment Status -</p>
         <Badge className="bg-green-500" variant="destructive">
-        <BadgeCheck data-icon="inline-start" />
-        Paid
-      </Badge>
+          <BadgeCheck data-icon="inline-start" />
+          {order.paymentStatus}
+        </Badge>
       </div>
     </div>
   );
