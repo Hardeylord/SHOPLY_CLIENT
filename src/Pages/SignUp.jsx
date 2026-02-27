@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../Authentication/AuthContext";
+import { LoaderCircleIcon } from "lucide-react";
 const SignUp = () => {
   const navigate = useNavigate();
   const gallery = [
@@ -28,8 +29,9 @@ const SignUp = () => {
 
   const [currenIndex, setCurrentIndex] = useState(0);
 
-  
-  const {theme } = useContext(userContext);
+  const [signing, setsigning] = useState(false);
+
+  const { theme } = useContext(userContext);
 
   useEffect(() => {
     const automaticsScroll = setInterval(() => {
@@ -57,15 +59,18 @@ const SignUp = () => {
 
   const sigNUp = async (e) => {
     e.preventDefault();
-
+    setsigning(true);
     try {
-      const response = await fetch("https://endearing-creation-production-d435.up.railway.app/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
-      });
+      const response = await fetch(
+        "https://endearing-creation-production-d435.up.railway.app/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -79,14 +84,18 @@ const SignUp = () => {
       }
     } catch (error) {
       toast.error("ERR_CONNECTION...Try Again");
+    } finally {
+      setsigning(false);
     }
   };
   return (
-    <div className={`${theme === "light" ? "light" : "dark2"} bg-[rgb(var(--BgColor))] h-screen md:min-h-screen flex flex-col md:flex-row items-center text-[rgb(var(--textColor))] justify-center gap-4  md:p-4`}>
+    <div
+      className={`${
+        theme === "light" ? "light" : "dark2"
+      } bg-[rgb(var(--BgColor))] h-screen md:min-h-screen flex flex-col md:flex-row items-center text-[rgb(var(--textColor))] justify-center gap-4  md:p-4`}
+    >
       <div className="w-full md:w-1/3 rounded-xl p-8 space-y-6">
-        <h2 className="text-3xl font-oswald text-center">
-          Create An Account
-        </h2>
+        <h2 className="text-3xl font-oswald text-center">Create An Account</h2>
         <Toaster />
         {/* Error Message Display */}
         {/* {error && (
@@ -158,10 +167,7 @@ const SignUp = () => {
                 type="checkbox"
                 className="h-4 w-4 text-green-600  border-gray-300 rounded"
               />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm"
-              >
+              <label htmlFor="remember-me" className="ml-2 block text-sm">
                 Remember me
               </label>
             </div>
@@ -172,9 +178,26 @@ const SignUp = () => {
           <div>
             <button
               type="submit"
-              className="w-full cursor-pointer flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-montserrat text-white bg-[rgb(var(--btnColor))] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+              disabled={signing}
+              className={`${
+                signing ? "cursor-not-allowed" : ""
+              } w-full cursor-pointer items-center flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-montserrat text-white bg-[rgb(var(--btnColor))] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 ease-in-out`}
             >
-              Sign Up
+              {signing ? (
+                <p className="flex gap-2">
+                  Signing in...
+                  <span className="flex items-center gap-2 justify-center">
+                    <LoaderCircleIcon
+                      className="animate-spin"
+                      color="white"
+                      size={16}
+                      strokeWidth={1.25}
+                    />
+                  </span>
+                </p>
+              ) : (
+                <p>Sign Up</p>
+              )}
             </button>
           </div>
         </form>

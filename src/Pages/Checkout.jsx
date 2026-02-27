@@ -1,12 +1,11 @@
 import { useContext, useState } from "react";
 import { userContext } from "../Authentication/AuthContext";
 import { v4 as uuidv4 } from "uuid";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { LoaderCircleIcon } from "lucide-react";
 export default function Checkout() {
-
-  const navigate=useNavigate()
   const idempotencyKey = uuidv4();
+  const [paying, setPaying] = useState(false);
 
   const [checkout_details, setCheckout_details] = useState({
     firstName: "",
@@ -30,8 +29,11 @@ export default function Checkout() {
   async function makePayment(e) {
     // e.preventDefault()
     // console.log({ checkout_details });
+    setPaying(true);
     try {
-     const resp = await fetch("https://endearing-creation-production-d435.up.railway.app/checkout/validateCart",{
+      const resp = await fetch(
+        "https://endearing-creation-production-d435.up.railway.app/validateCart",
+        {
           method: "POST",
           headers: {
             "Idempotency-Key": idempotencyKey,
@@ -43,12 +45,14 @@ export default function Checkout() {
       );
 
       if (resp.ok) {
-        const checkout_response = await resp.json()
+        const checkout_response = await resp.json();
         window.location.href = checkout_response.sessionUrl;
-      } 
-      toast.error("Error .... Try again")
+      }
+      toast.error("Error .... Try again");
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    } finally {
+      setPaying(false);
     }
   }
 
@@ -73,6 +77,7 @@ export default function Checkout() {
                   </label>
                   <input
                     id="firstname"
+                    required
                     onChange={(e) => getVal(e)}
                     name="firstName"
                     placeholder="john"
@@ -86,6 +91,7 @@ export default function Checkout() {
                     Last Name
                   </label>
                   <input
+                    required
                     id="lastname"
                     onChange={(e) => getVal(e)}
                     name="lastName"
@@ -102,6 +108,7 @@ export default function Checkout() {
                     Email
                   </label>
                   <input
+                    required
                     id="email"
                     name="email"
                     placeholder="johndoe@gmail.com"
@@ -115,6 +122,7 @@ export default function Checkout() {
                     Phone Number
                   </label>
                   <input
+                    required
                     id="phonenumber"
                     onChange={(e) => getVal(e)}
                     name="phonenumber"
@@ -131,6 +139,7 @@ export default function Checkout() {
                     Delivery Address
                   </label>
                   <input
+                    required
                     id="deliveryAddress"
                     onChange={(e) => getVal(e)}
                     name="deliveryAddress"
@@ -140,25 +149,12 @@ export default function Checkout() {
                   />
                 </div>
 
-                {/* <div className="w-full flex flex-col gap-y-1.5">
-                  <label className="ml-2.5" htmlFor="State">
-                    State
-                  </label>
-                  <input
-                    id="State"
-                    onChange={(e)=>getVal(e)}
-                    name="State"
-                    placeholder="oyo"
-                    className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm transition duration-150"
-                    type="text"
-                  />
-                </div> */}
-
                 <div className="w-full flex flex-col gap-y-1.5">
                   <label className="ml-2.5" htmlFor="Zipcode">
                     Zip code
                   </label>
                   <input
+                    required
                     id="Zipcode"
                     name="Zipcode"
                     placeholder="560021"
@@ -228,10 +224,25 @@ export default function Checkout() {
 
             <button
               type="submit"
+              disabled={paying}
               onClick={() => makePayment()}
-              className="bg-[rgb(33,100,89)] rounded-xs cursor-pointer text-white text-center p-2 px-5"
+              className="bg-[rgb(33,100,89)] flex justify-center items-center rounded-xs cursor-pointer text-white text-center p-2 px-5"
             >
-              Continue to Payment
+              {paying ? (
+                <p className="flex gap-2">
+                  Processing
+                  <span className="flex items-center gap-2 justify-center">
+                    <LoaderCircleIcon
+                      className="animate-spin"
+                      color="white"
+                      size={16}
+                      strokeWidth={1.25}
+                    />
+                  </span>
+                </p>
+              ) : (
+                <p>Continue to Payment</p>
+              )}
             </button>
           </div>
         </div>

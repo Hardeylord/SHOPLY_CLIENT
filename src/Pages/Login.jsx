@@ -3,6 +3,7 @@ import { userContext } from "../Authentication/AuthContext";
 import { jwtDecode } from "jwt-decode";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { LoaderCircleIcon } from "lucide-react";
 export const Login = () => {
   const gallery = [
     {
@@ -25,6 +26,7 @@ export const Login = () => {
     },
   ];
 
+  const [loginINNN, setloginINNN] = useState(false);
 
   const [currenIndex, setCurrentIndex] = useState(0);
 
@@ -57,16 +59,19 @@ export const Login = () => {
 
   const signIn = async (e) => {
     e.preventDefault();
-
+    setloginINNN(true);
     try {
-      const response = await fetch("https://endearing-creation-production-d435.up.railway.app/login", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
-      });
+      const response = await fetch(
+        "https://endearing-creation-production-d435.up.railway.app/login",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+        }
+      );
 
       // console.log(response)
       if (response.ok) {
@@ -93,16 +98,22 @@ export const Login = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Unable to Login: " + error);
+      toast.error("Unable to Login: Check internet connection");
+    } finally {
+      setloginINNN(false);
     }
   };
 
   return (
-    <div className={`${theme === "light" ? "light" : "dark2"} h-screen md:min-h-screen flex flex-col bg-[rgb(var(--BgColor))] md:flex-row items-center justify-center gap-4  md:p-4 text-[rgb(var(--textColor))]`}>
+    <div
+      className={`${
+        theme === "light" ? "light" : "dark2"
+      } h-screen md:min-h-screen flex flex-col bg-[rgb(var(--BgColor))] md:flex-row items-center justify-center gap-4  md:p-4 text-[rgb(var(--textColor))]`}
+    >
       <Toaster />
       <div className="w-full md:w-1/3 rounded-xl  px-8 space-y-6">
         <h2 className="text-3xl font-oswald text-center">
-         Welcome back <br /> Sign In to Your Account
+          Welcome back <br /> Sign In to Your Account
         </h2>
 
         {/* Error Message Display */}
@@ -157,19 +168,13 @@ export const Login = () => {
                 type="checkbox"
                 className="h-4 w-4   focus:ring-green-500 border-gray-300 rounded"
               />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm"
-              >
+              <label htmlFor="remember-me" className="ml-2 block text-sm">
                 Remember me
               </label>
             </div>
 
             <div className="text-sm">
-              <a
-                href="#"
-                className="font-montserrat hover:text-green-500"
-              >
+              <a href="#" className="font-montserrat hover:text-green-500">
                 Forgot your password?
               </a>
             </div>
@@ -178,9 +183,24 @@ export const Login = () => {
           <div>
             <button
               type="submit"
-              className="w-full cursor-pointer flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-montserrat text-white bg-[rgb(var(--btnColor))] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+              disabled={loginINNN}
+              className="w-full items-center cursor-pointer flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-montserrat text-white bg-[rgb(var(--btnColor))] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 ease-in-out"
             >
-              Sign In
+              {loginINNN ? (
+                <p className="flex gap-2">
+                  Signing in...
+                  <span className="flex items-center gap-2 justify-center">
+                    <LoaderCircleIcon
+                      className="animate-spin"
+                      color="white"
+                      size={16}
+                      strokeWidth={1.25}
+                    />
+                  </span>
+                </p>
+              ) : (
+                <p>Sign In</p>
+              )}
             </button>
           </div>
         </form>

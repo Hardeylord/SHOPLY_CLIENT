@@ -3,9 +3,9 @@ import ProductRow from "./ProductRow";
 import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Spinner } from "@/Components/ui/spinner";
+import { ScrollArea, ScrollBar } from "@/Components/ui/scroll-area"
 import {
   Empty,
-  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
@@ -17,8 +17,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/Components/ui/table"
-import { MoveLeft, MoveRight} from "lucide-react";
+} from "@/Components/ui/table";
+import { MoveLeft, MoveRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../Authentication/AuthContext";
 
@@ -100,7 +100,7 @@ export const Allproduct = ({ sort, pSearchInputs }) => {
   return (
     <>
       <Toaster />
-      <div className="w-full p-4">
+      <div className="w-full p-4 overflow-y-hidden">
         {fetching ? (
           // loader
           <Empty className="w-full h-[70vh]">
@@ -136,77 +136,41 @@ export const Allproduct = ({ sort, pSearchInputs }) => {
             <p className="font-oswald text-7xl">Unable to connect Backend</p>
           </div>
         ) : (
-
+          <ScrollArea className="w-full h-125">
           <Table>
-      <TableHeader>
-        <TableRow>
-        <TableHead>Image</TableHead>
-          <TableHead>Product</TableHead>
-          <TableHead>Price</TableHead>
-          <TableHead>Rating</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-
-       {products
-              .filter((product) => {
-                return pSearchInputs.toLowerCase() === ""
-                  ? product
-                  : product.name.toLowerCase().includes(pSearchInputs);
-              })
-              .map((product, index) => (
-                <ProductRow
-                  key={index}
-                  pFetching={fetching} 
-                  pSetFetching={setFetching}
-                  pImage={product.image}
-                  pName={product.name}
-                  pDesc={product.desc}
-                  pPrice={product.price}
-                  pRating={Math.floor(product.rating)}
-                  id={product.id}
-                />
-              ))}
-
-
-        {/* <TableRow>
-        <TableCell>
-        <div className="rounded-xs w-fit p-1 bg-white">
-            <img
-              src="/noImage.jpg"
-              className="size-14  object-cover object-center"
-              alt=""
-            />
-          </div>
-        </TableCell>
-          <TableCell className="font-medium">Wireless Mouse</TableCell>
-          <TableCell>$29.99</TableCell>
-          <TableCell>5</TableCell>
-          <TableCell className="text-right">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="size-8">
-                  <MoreHorizontalIcon />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem>Duplicate</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive">
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow> */}
-
-
-      </TableBody>
-    </Table>
-
+            <TableHeader>
+              <TableRow>
+                <TableHead>Image</TableHead>
+                <TableHead>Product</TableHead>
+                <TableHead>Price</TableHead>
+                <TableHead>Rating</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {products
+                .filter((product) => {
+                  return pSearchInputs.toLowerCase() === ""
+                    ? product
+                    : product.name.toLowerCase().includes(pSearchInputs);
+                })
+                .map((product, index) => (
+                  <ProductRow
+                    key={index}
+                    pFetching={fetching}
+                    pSetFetching={setFetching}
+                    pImage={product.image}
+                    pName={product.name}
+                    pDesc={product.desc}
+                    pPrice={product.price}
+                    pRating={Math.floor(product.rating)}
+                    id={product.id}
+                  />
+                ))}
+            </TableBody>
+          </Table>
+           <ScrollBar orientation="horizontal" />
+           </ScrollArea>
           // <div className="grid gap-2 grid-cols-1 grid-rows-1">
           //   <div className="flex text-[12px] font-oswald w-full text-center items-center space-x-10">
           //     <div className="w-1/6">
@@ -237,7 +201,7 @@ export const Allproduct = ({ sort, pSearchInputs }) => {
           //     .map((product, index) => (
           //       <ProductRow
           //         key={index}
-          //         pFetching={fetching} 
+          //         pFetching={fetching}
           //         pSetFetching={setFetching}
           //         pImage={product.image}
           //         pName={product.name}

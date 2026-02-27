@@ -177,8 +177,7 @@ export const Account_sidebar = () => {
           </SidebarGroup>
         )}
 
-        {userRole === "ADMIN" ||
-          (userRole === "EDITOR" && (
+        {(userRole === "ADMIN" || userRole === "EDITOR") && (
             <SidebarGroup>
               <SidebarGroupLabel className="font-oswald">
                 Products Management
@@ -205,7 +204,7 @@ export const Account_sidebar = () => {
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
-          ))}
+          )}
       </SidebarContent>
 
       <SidebarFooter>
