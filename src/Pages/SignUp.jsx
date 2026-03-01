@@ -180,7 +180,7 @@ const SignUp = () => {
               type="submit"
               disabled={signing}
               className={`${
-                signing ? "cursor-not-allowed" : ""
+                signing ? "cursor-not-allowed opacity-[0.6]" : "pointer opacity-[10]"
               } w-full cursor-pointer items-center flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-montserrat text-white bg-[rgb(var(--btnColor))] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 ease-in-out`}
             >
               {signing ? (

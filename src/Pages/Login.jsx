@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { LoaderCircleIcon } from "lucide-react";
+import Cookies from "universal-cookie";
 export const Login = () => {
   const gallery = [
     {
@@ -25,6 +26,8 @@ export const Login = () => {
       imageText: "When you need reliable warmth, pull on this Wolf Tree vest.",
     },
   ];
+
+  const cookie = new Cookies();
 
   const [loginINNN, setloginINNN] = useState(false);
 
@@ -61,27 +64,29 @@ export const Login = () => {
     e.preventDefault();
     setloginINNN(true);
     try {
-      const response = await fetch(
-        "https://endearing-creation-production-d435.up.railway.app/login",
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userInfo),
-        }
-      );
+      const response = await fetch("https://endearing-creation-production-d435.up.railway.app/login", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+      });
 
       // console.log(response)
       if (response.ok) {
-        const accessToken = await response.text();
+        const accessToken = await response.json();
         // console.log(accessToken)
-        const token = jwtDecode(accessToken);
-        setBearerToken(accessToken);
+        const token = jwtDecode(accessToken.accessToken);
+        setBearerToken(accessToken.accessToken);
         setUser(true);
         setUserRole(token.role);
         setUserName(token.sub);
+
+        cookie.set("refreshToken", accessToken.refreshToken, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 7,
+        });
 
         if (token.role === "ADMIN" || token.role === "EDITOR") {
           navigate("/dashboard/admin");
@@ -184,6 +189,10 @@ export const Login = () => {
             <button
               type="submit"
               disabled={loginINNN}
+              style={{
+                cursor: loginINNN ? "not-allowed" : "pointer",
+                opacity: loginINNN ? 0.6 : 1,
+              }}
               className="w-full items-center cursor-pointer flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-montserrat text-white bg-[rgb(var(--btnColor))] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 ease-in-out"
             >
               {loginINNN ? (

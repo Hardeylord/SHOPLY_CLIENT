@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { userContext } from "./AuthContext";
 import { jwtDecode } from "jwt-decode";
-
+import Cookies from "universal-cookie";
 export const Auth = ({ children }) => {
+  const refreshCookie = new Cookies();
 
   const [user, setUser] = useState(false);
   const [loading, isLoading] = useState(true);
@@ -20,11 +21,14 @@ export const Auth = ({ children }) => {
   };
 
   const LogOutUser2 = async () => {
+    const rToken = refreshCookie.get("refreshToken");
     await fetch(
       "https://endearing-creation-production-d435.up.railway.app/auth/logout",
       {
         method: "POST",
         credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refreshToken: rToken }),
       }
     );
 
@@ -61,12 +65,17 @@ export const Auth = ({ children }) => {
   }
 
   const fetchRefreshToken = async () => {
+    const rToken = refreshCookie.get("refreshToken");
     try {
       const resp = await fetch(
         "https://endearing-creation-production-d435.up.railway.app/refreshToken",
         {
           method: "POST",
           credentials: "include",
+          headers: { 
+            "Content-Type": "application/json" 
+          },
+          body: JSON.stringify({ refreshToken: rToken }),
         }
       );
 
