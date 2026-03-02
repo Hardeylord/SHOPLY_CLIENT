@@ -32,7 +32,7 @@ export default function Checkout() {
     setPaying(true);
     try {
       const resp = await fetch(
-        "https://endearing-creation-production-d435.up.railway.app/validateCart",
+        "https://endearing-creation-production-d435.up.railway.app/checkout/validateCart",
         {
           method: "POST",
           headers: {
@@ -225,6 +225,10 @@ export default function Checkout() {
             <button
               type="submit"
               disabled={paying}
+              style={{
+                cursor: paying ? "not-allowed" : "pointer",
+                opacity: paying ? 0.6 : 1,
+              }}
               onClick={() => makePayment()}
               className="bg-[rgb(33,100,89)] flex justify-center items-center rounded-xs cursor-pointer text-white text-center p-2 px-5"
             >
