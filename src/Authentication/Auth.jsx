@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { userContext } from "./AuthContext";
 import { jwtDecode } from "jwt-decode";
-import Cookies from "universal-cookie";
 export const Auth = ({ children }) => {
-  const refreshCookie = new Cookies();
 
   const [user, setUser] = useState(false);
   const [loading, isLoading] = useState(true);
@@ -21,16 +19,18 @@ export const Auth = ({ children }) => {
   };
 
   const LogOutUser2 = async () => {
-    const rToken = refreshCookie.get("refreshToken");
+    const refreshToken = localStorage.getItem("refresh_token")
     await fetch(
       "https://endearing-creation-production-d435.up.railway.app/auth/logout",
       {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ refreshToken: rToken }),
+        body: JSON.stringify({ rToken: refreshToken }),
       }
     );
+
+    localStorage.removeItem("refresh_token");
 
     window.location.reload();
   };
@@ -65,7 +65,7 @@ export const Auth = ({ children }) => {
   }
 
   const fetchRefreshToken = async () => {
-    const rToken = refreshCookie.get("refreshToken");
+    const refreshToken = localStorage.getItem("refresh_token")
     try {
       const resp = await fetch(
         "https://endearing-creation-production-d435.up.railway.app/refreshToken",
@@ -75,7 +75,7 @@ export const Auth = ({ children }) => {
           headers: { 
             "Content-Type": "application/json" 
           },
-          body: JSON.stringify({ refreshToken: rToken }),
+          body: JSON.stringify({ rToken: refreshToken }),
         }
       );
 

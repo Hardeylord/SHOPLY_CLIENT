@@ -4,7 +4,6 @@ import { jwtDecode } from "jwt-decode";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { LoaderCircleIcon } from "lucide-react";
-import Cookies from "universal-cookie";
 export const Login = () => {
   const gallery = [
     {
@@ -27,7 +26,6 @@ export const Login = () => {
     },
   ];
 
-  const cookie = new Cookies();
 
   const [loginINNN, setloginINNN] = useState(false);
 
@@ -83,10 +81,7 @@ export const Login = () => {
         setUserRole(token.role);
         setUserName(token.sub);
 
-        cookie.set("refreshToken", accessToken.refreshToken, {
-          path: "/",
-          maxAge: 60 * 60 * 24 * 7,
-        });
+        localStorage.setItem("refresh_token", accessToken.refreshToken)
 
         if (token.role === "ADMIN" || token.role === "EDITOR") {
           navigate("/dashboard/admin");
